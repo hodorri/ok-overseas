@@ -193,21 +193,20 @@ const SHEET_GID = {
 };
 
 function parseCSV(text) {
-  const lines = text.trim().split('\n');
-  return lines.map(line => {
-    const cells = [];
-    let current = '', inQuotes = false;
-    for (let i = 0; i < line.length; i++) {
-      const ch = line[i];
-      if (ch === '"') {
-        if (inQuotes && i + 1 < line.length && line[i + 1] === '"') { current += '"'; i++; }
-        else { inQuotes = !inQuotes; }
-      } else if (ch === ',' && !inQuotes) { cells.push(current); current = ''; }
-      else { current += ch; }
-    }
-    cells.push(current);
-    return cells;
-  });
+  const rows = [];
+  let current = '', inQuotes = false, cells = [];
+  const src = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  for (let i = 0; i < src.length; i++) {
+    const ch = src[i];
+    if (ch === '"') {
+      if (inQuotes && i + 1 < src.length && src[i + 1] === '"') { current += '"'; i++; }
+      else { inQuotes = !inQuotes; }
+    } else if (ch === ',' && !inQuotes) { cells.push(current); current = ''; }
+    else if (ch === '\n' && !inQuotes) { cells.push(current); rows.push(cells); cells = []; current = ''; }
+    else { current += ch; }
+  }
+  if (current || cells.length) { cells.push(current); rows.push(cells); }
+  return rows.filter(r => r.some(c => c.trim()));
 }
 
 async function fetchSheetData(sheetName) {
@@ -1315,8 +1314,8 @@ function App() {
             newSafety[agency] = {
               manual: (row[1] || '').trim() === '제출',
               hospital: (row[2] || '').trim() === '제출',
-              memo: (row[3] || '').trim(),
-              feeMemo: (row[4] || '').trim(),
+              memo: (row[3] || ''),
+              feeMemo: (row[4] || ''),
             };
           });
           if (Object.keys(newSafety).length > 0) setSafetySubmission(prev => ({ ...prev, ...newSafety }));
