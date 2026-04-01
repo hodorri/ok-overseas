@@ -1,0 +1,17 @@
+node_modules
+*.pdf
+*.pptx
+*.xlsx
+slides
+하나투어_pages
+롯데관광_pages
+레드캡_pages
+호텔비교.PNG
+관광*.PNG
+읏맨 이미지*
+읏맨-배경제거.png
+읏맨.png
+test_*.png
+extract_*.py
+apps_script.gs
+.git

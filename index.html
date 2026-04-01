@@ -1,0 +1,3536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>2026 OK금융그룹 해외연수 업체 평가</title>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgenjs.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ok: { orange: '#F26522', dark: '#333333', light: '#FFF3EC', mid: '#F89C5E' }
+      }
+    }
+  }
+}
+</script>
+<style>
+@font-face {
+  font-family: '오케이체';
+  src: url('./오케이체/오케이체 Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: '오케이체';
+  src: url('./오케이체/오케이체 Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: '오케이체';
+  src: url('./오케이체/오케이체 Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+html { scroll-behavior: smooth; }
+body { font-family: '오케이체', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; font-weight: 500; }
+h1, h2, h3, .font-bold { font-weight: 700; }
+p, span, td, li, label, textarea, input { font-weight: 500; }
+.text-xs, .text-sm, caption, .text-gray-400, .text-gray-500 { font-weight: 300; }
+th, .font-extrabold, .winner-badge { font-weight: 700; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+.topnav-link { transition: all 0.2s; }
+.tab-btn { transition: all 0.2s; }
+.tab-btn.active { background: #F26522; color: white; border-color: #F26522; }
+.lowest-price { background: #ecfdf5 !important; color: #065f46; font-weight: 700; }
+.winner-badge { animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(242,101,34,0.4)} 50%{box-shadow:0 0 0 10px rgba(242,101,34,0)} }
+.timeline-line { position: relative; }
+.timeline-line::before { content:''; position:absolute; left:15px; top:0; bottom:0; width:2px; background:#e5e7eb; }
+.timeline-dot { width:12px; height:12px; border-radius:50%; position:relative; z-index:1; flex-shrink:0; }
+.editable-cell { position: relative; }
+.edit-mode .editable-cell { border: 1px dashed #d4a574; background: #fffdf5; border-radius: 4px; cursor: pointer; transition: all 0.15s; }
+.edit-mode .editable-cell:hover { background: #fff8e1; box-shadow: 0 0 0 2px rgba(242,101,34,0.2); }
+.edit-mode .editable-cell:hover::after { content: '\270F'; position: absolute; top: 2px; right: 4px; font-size: 10px; color: #F26522; opacity: 0.7; }
+.editable-input { width: 100%; border: 1px solid #F26522; border-radius: 4px; padding: 4px 8px; font-size: inherit; background: white; outline: none; box-shadow: 0 0 0 2px rgba(242,101,34,0.15); }
+.edit-toolbar { position: fixed; top: 56px; left: 0; right: 0; z-index: 100; background: rgba(242,101,34,0.95); backdrop-filter: blur(8px); color: white; padding: 10px 24px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+.edit-toolbar button { padding: 6px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; }
+.modal-box { background: white; border-radius: 16px; padding: 32px; width: 360px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.lightbox-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:300; display:flex; align-items:center; justify-content:center; }
+.lightbox-content { max-width:90vw; max-height:85vh; position:relative; }
+.lightbox-img { max-width:100%; max-height:75vh; object-fit:contain; border-radius:8px; }
+.lightbox-thumb { width:72px; height:52px; object-fit:cover; border-radius:4px; cursor:pointer; border:2px solid transparent; transition:all 0.15s; opacity:0.6; }
+.lightbox-thumb:hover, .lightbox-thumb.active { opacity:1; border-color:#F26522; }
+.lightbox-nav { position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.9); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:20px; color:#333; box-shadow:0 2px 8px rgba(0,0,0,0.2); transition:all 0.15s; }
+.lightbox-nav:hover { background:white; box-shadow:0 4px 16px rgba(0,0,0,0.3); }
+.hotel-card-img { cursor:pointer; position:relative; overflow:hidden; }
+.hotel-card-img::after { content:'사진 보기'; position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(0,0,0,0.7)); color:white; text-align:center; padding:8px; font-size:12px; font-weight:700; opacity:0; transition:opacity 0.2s; }
+.hotel-card-img:hover::after { opacity:1; }
+/* 읏맨 둥둥 애니메이션 */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(-2deg); }
+  25% { transform: translateY(-12px) rotate(1deg); }
+  50% { transform: translateY(-6px) rotate(-1deg); }
+  75% { transform: translateY(-14px) rotate(2deg); }
+}
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1); }
+}
+.mascot-float { animation: float 4s ease-in-out infinite; filter: drop-shadow(0 12px 20px rgba(0,0,0,0.15)); cursor: pointer; transition: filter 0.3s; }
+.mascot-float:hover { filter: drop-shadow(0 16px 30px rgba(242,101,34,0.35)); animation-play-state: paused; }
+.sparkle { position: absolute; width: 8px; height: 8px; background: #FFD700; border-radius: 50%; animation: sparkle 2s ease-in-out infinite; }
+.sparkle:nth-child(2) { animation-delay: 0.5s; width: 6px; height: 6px; }
+.sparkle:nth-child(3) { animation-delay: 1s; width: 5px; height: 5px; }
+.sparkle:nth-child(4) { animation-delay: 1.5s; width: 7px; height: 7px; }
+</style>
+</head>
+<body class="bg-gray-50 text-ok-dark">
+<div id="root"></div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpN7eNpBsA3iTYpvfrzgSSv3tVvcN_JR4&callback=Function.prototype" async defer></script>
+
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback, createContext, useContext } = React;
+
+// ============ EDIT CONTEXT ============
+const EditContext = createContext({ isEditMode: false });
+
+function useEditMode() {
+  return useContext(EditContext);
+}
+
+// ============ EDITABLE CELL COMPONENT ============
+function EditableCell({ value, onSave, tag: Tag = 'span', className = '', inputClassName = '', multiline = false, style = {} }) {
+  const { isEditMode } = useEditMode();
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(value);
+  const inputRef = useRef(null);
+
+  useEffect(() => { setDraft(value); }, [value]);
+  useEffect(() => {
+    if (editing && inputRef.current) {
+      inputRef.current.focus();
+      if (inputRef.current.select) inputRef.current.select();
+    }
+  }, [editing]);
+
+  if (!isEditMode) {
+    return <Tag className={className} style={style}>{value}</Tag>;
+  }
+
+  if (editing) {
+    const handleDone = () => {
+      setEditing(false);
+      if (draft !== value) onSave(draft);
+    };
+    if (multiline) {
+      return <textarea ref={inputRef} className={`editable-input ${inputClassName}`} style={style}
+        value={draft} onChange={e => setDraft(e.target.value)}
+        onBlur={handleDone} onKeyDown={e => { if (e.key==='Escape') { setDraft(value); setEditing(false); }}} rows={3} />;
+    }
+    return <input ref={inputRef} className={`editable-input ${inputClassName}`} style={style}
+      value={draft} onChange={e => setDraft(e.target.value)}
+      onBlur={handleDone} onKeyDown={e => { if (e.key==='Enter') handleDone(); if (e.key==='Escape') { setDraft(value); setEditing(false); }}} />;
+  }
+
+  return (
+    <Tag className={`editable-cell ${className}`} style={{...style, display: Tag==='span' ? 'inline-block' : undefined, minWidth: '20px', padding: '2px 4px'}}
+      onClick={() => setEditing(true)}>
+      {value || '\u00A0'}
+    </Tag>
+  );
+}
+
+// ============ DATA ============
+const SECTIONS = [
+  { id:'overview', label:'입찰 개요', icon:'📋' },
+  { id:'evaluation', label:'평가 결과', icon:'⭐' },
+  { id:'quote', label:'견적 비교', icon:'💰' },
+  { id:'flight', label:'항공 비교', icon:'✈️' },
+  { id:'hotel', label:'호텔 비교', icon:'🏨' },
+  { id:'tour', label:'관광+일정 비교', icon:'🗺️' },
+  { id:'etc', label:'기타 평가', icon:'📝' },
+];
+
+const AGENCIES = ['하나투어','레드캡','롯데관광'];
+const AGENCY_COLORS = { '하나투어':'#3B82F6', '레드캡':'#EF4444', '롯데관광':'#22C55E' };
+const REGIONS = ['발리','오키나와','나고야'];
+
+const CRITERIA = [
+  { id:'flight', label:'항공', defaultWeight:20 },
+  { id:'hotel', label:'호텔', defaultWeight:30 },
+  { id:'tour', label:'관광+차량', defaultWeight:10 },
+  { id:'safety', label:'안전사고 매뉴얼', defaultWeight:10 },
+  { id:'fee', label:'수수료', defaultWeight:10 },
+  { id:'internal', label:'내부평가', defaultWeight:20 },
+];
+
+// ============ GOOGLE SHEETS 연동 ============
+const GSHEET_ID = '1zSP57bMxE8JnllAPMBkYCp06KWfiK0H723A1594B3_k';
+
+// 시트별 GID 매핑 (직접 CSV export용)
+const SHEET_GID = {
+  '견적_발리': 0, '견적_오키나와': 488193621, '견적_나고야': 489251352,
+  '항공': 2057515049, '평가결과': 1820928818, '내부평가': 2005515236,
+  '입찰개요': 1788747801, '업체정보': 624596099,
+  '호텔': 706094183, '호텔_이미지': 684725963, '호텔_위치': 846306242,
+  '일정_발리': 1002043199, '일정_오키나와': 618884807, '일정_나고야': 499773465,
+  '안전사고_매뉴얼': 635861207,
+  '평가점수정의': 796083085,
+};
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  return lines.map(line => {
+    const cells = [];
+    let current = '', inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') {
+        if (inQuotes && i + 1 < line.length && line[i + 1] === '"') { current += '"'; i++; }
+        else { inQuotes = !inQuotes; }
+      } else if (ch === ',' && !inQuotes) { cells.push(current); current = ''; }
+      else { current += ch; }
+    }
+    cells.push(current);
+    return cells;
+  });
+}
+
+async function fetchSheetData(sheetName) {
+  const gid = SHEET_GID[sheetName];
+  if (gid !== undefined) {
+    // 직접 CSV export (gviz 아포스트로피 파싱 문제 회피)
+    try {
+      const url = `https://docs.google.com/spreadsheets/d/${GSHEET_ID}/export?format=csv&gid=${gid}&_t=${Date.now()}`;
+      const res = await fetch(url, { cache: 'no-store' });
+      if (res.ok) {
+        const text = await res.text();
+        const parsed = parseCSV(text);
+        if (parsed && parsed.length > 0) return parsed;
+      }
+    } catch(e) {}
+  }
+  // 폴백: gviz CSV
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${GSHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}&_t=${Date.now()}`;
+    const res = await fetch(url, { cache: 'no-store' });
+    if (res.ok) {
+      const text = await res.text();
+      return parseCSV(text);
+    }
+  } catch(e) {}
+  return null;
+}
+
+// ============ GOOGLE MAPS 링크 ↔ 좌표 변환 ============
+function coordToMapsUrl(lat, lng) {
+  return `https://www.google.com/maps?q=${lat},${lng}`;
+}
+
+function mapsUrlToCoord(url) {
+  if (!url) return null;
+  // https://www.google.com/maps?q=lat,lng
+  let m = url.match(/[?&]q=([-\d.]+),([-\d.]+)/);
+  if (m) return { lat: parseFloat(m[1]), lng: parseFloat(m[2]) };
+  // https://www.google.com/maps/@lat,lng or /place/lat,lng
+  m = url.match(/[@/]([-\d.]+),([-\d.]+)/);
+  if (m) return { lat: parseFloat(m[1]), lng: parseFloat(m[2]) };
+  // 숫자만 있는 경우 (기존 호환: lat,lng 또는 lat)
+  m = url.match(/^([-\d.]+),([-\d.]+)$/);
+  if (m) return { lat: parseFloat(m[1]), lng: parseFloat(m[2]) };
+  return null;
+}
+
+// ============ GOOGLE SHEETS 쓰기 (양방향 동기화) ============
+async function saveToSheet(sheetName, headers, rows) {
+  try {
+    const res = await fetch('/api/sheets-save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'saveSheet', sheetName, headers, rows }),
+    });
+    const data = await res.json();
+    if (data.success) console.log(`시트 저장 완료: ${sheetName}`);
+    else console.warn(`시트 저장 실패: ${sheetName}`, data.error);
+    return data;
+  } catch(e) {
+    console.warn(`시트 저장 오류: ${sheetName}`, e);
+    return { success: false, error: e.message };
+  }
+}
+
+async function saveBatchToSheets(sheets) {
+  try {
+    const res = await fetch('/api/sheets-save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'saveBatch', sheets }),
+    });
+    return await res.json();
+  } catch(e) {
+    console.warn('시트 일괄 저장 오류:', e);
+    return { success: false, error: e.message };
+  }
+}
+
+// 데이터를 시트 형식으로 변환하는 헬퍼들
+function quoteDataToSheetFormat(quoteData) {
+  const sheets = [];
+  const regionSheetMap = { '발리': '견적_발리', '오키나와': '견적_오키나와', '나고야': '견적_나고야' };
+  for (const [region, data] of Object.entries(quoteData)) {
+    if (regionSheetMap[region]) {
+      sheets.push({ sheetName: regionSheetMap[region], headers: data.headers, rows: data.rows });
+    }
+  }
+  return sheets;
+}
+
+function flightDataToSheetFormat(flightData) {
+  // 항공 시트: 지역 | 항목 | 업체1 | 업체2 | ...
+  const allRows = [];
+  let headers = null;
+  for (const [region, data] of Object.entries(flightData)) {
+    if (!headers) headers = ['지역', '항목', ...data.headers.slice(1)];
+    data.rows.forEach(row => {
+      allRows.push([region, row[0], ...row.slice(1)]);
+    });
+  }
+  return [{ sheetName: '항공', headers: headers || ['지역','항목'], rows: allRows }];
+}
+
+function overviewDataToSheetFormat(overviewData) {
+  return [{ sheetName: '입찰개요', headers: ['항목', '내용'], rows: overviewData }];
+}
+
+function hotelDataToSheetFormat(hotelData) {
+  const rows = [];
+  for (const [region, agencies] of Object.entries(hotelData)) {
+    for (const ag of agencies) {
+      for (const opt of ag.options) {
+        rows.push([
+          region, ag.agency, opt.plan || '', opt.name, String(opt.stars || 3),
+          opt.details || '', (opt.amenities || []).join('|'),
+          opt.price || '', opt.planTotal || '', opt.color || '#3B82F6'
+        ]);
+      }
+    }
+  }
+  return [{ sheetName: '호텔', headers: ['지역','업체','안','호텔명','별점','상세','부대시설','가격','합계','색상'], rows }];
+}
+
+function itineraryDataToSheetFormat(itineraryData) {
+  const sheets = [];
+  const regionSheetMap = { '발리': '일정_발리', '오키나와': '일정_오키나와', '나고야': '일정_나고야' };
+  for (const [region, agencies] of Object.entries(itineraryData)) {
+    if (!regionSheetMap[region]) continue;
+    const rows = [];
+    for (const [agency, data] of Object.entries(agencies)) {
+      for (const day of (data.days || [])) {
+        const coordsStr = (day.coords || []).map(c => `${c.name}>${coordToMapsUrl(c.lat, c.lng)}`).join('|');
+        rows.push([agency, day.batch || '', day.day, day.title, (day.items || []).join('|'), coordsStr]);
+      }
+    }
+    sheets.push({ sheetName: regionSheetMap[region], headers: ['업체','차수','Day','제목','일정항목','좌표'], rows });
+  }
+  return sheets;
+}
+
+function agencyCardsToSheetFormat(agencyCards) {
+  const rows = [];
+  for (const a of agencyCards) {
+    const d = a.detail || {};
+    const t = d.team || {};
+    const pm = t.pm || {};
+    rows.push([a.name, 'sub', a.sub || '']);
+    rows.push([a.name, 'desc', a.desc || '']);
+    rows.push([a.name, 'color', a.color || '']);
+    rows.push([a.name, 'company', d.company || '']);
+    rows.push([a.name, 'ceo', d.ceo || '']);
+    rows.push([a.name, 'founded', d.founded || '']);
+    rows.push([a.name, 'listed', d.listed || '']);
+    rows.push([a.name, 'revenue', d.revenue || '']);
+    rows.push([a.name, 'assets', d.assets || '']);
+    rows.push([a.name, 'business', d.business || '']);
+    rows.push([a.name, 'strengths', (d.strengths || []).join('|')]);
+    rows.push([a.name, 'concept', d.concept || '']);
+    rows.push([a.name, 'team_structure', (t.structure || []).join('|')]);
+    rows.push([a.name, 'pm_name', pm.name || '']);
+    rows.push([a.name, 'pm_title', pm.title || '']);
+    rows.push([a.name, 'pm_exp', pm.exp || '']);
+    rows.push([a.name, 'pm_dept', pm.dept || '']);
+    for (const m of (t.members || [])) {
+      rows.push([a.name, 'member', [m.name, m.title, m.exp, m.role].join('|')]);
+    }
+    for (const tr of (d.track || [])) {
+      rows.push([a.name, 'track', [tr.client, tr.pax, tr.dest, tr.year, tr.amount].join('|')]);
+    }
+    rows.push([a.name, 'insurance', d.insurance || '']);
+    rows.push([a.name, 'emergency', d.emergency || '']);
+    rows.push([a.name, 'extras', (d.extras || []).join('|')]);
+  }
+  return [{ sheetName: '업체정보', headers: ['업체명','필드명','값'], rows }];
+}
+
+// 전체 데이터를 시트에 저장 (저장 버튼용)
+function hotelImageDataToSheetFormat() {
+  const rows = [];
+  for (const [region, agencies] of Object.entries(HOTEL_IMAGES)) {
+    for (const [agency, hotels] of Object.entries(agencies)) {
+      for (const [hotelName, imgs] of Object.entries(hotels)) {
+        rows.push([region, agency, hotelName, ...imgs]);
+      }
+    }
+  }
+  return [{ sheetName: '호텔_이미지', headers: ['지역','업체','호텔명','이미지1','이미지2','이미지3','이미지4'], rows }];
+}
+
+async function saveAllToSheets(quoteData, flightData, hotelData, itineraryData, overviewData, agencyCards) {
+  const allSheets = [
+    ...quoteDataToSheetFormat(quoteData),
+    ...flightDataToSheetFormat(flightData),
+    ...hotelDataToSheetFormat(hotelData),
+    ...hotelImageDataToSheetFormat(),
+    ...itineraryDataToSheetFormat(itineraryData),
+    ...overviewDataToSheetFormat(overviewData),
+    ...agencyCardsToSheetFormat(agencyCards),
+  ];
+  return await saveBatchToSheets(allSheets);
+}
+
+const DEFAULT_QUOTE_DATA = {
+  '발리': {
+    headers: ['항목','하나투어 1안','하나투어 2안','레드캡','롯데관광'],
+    rows: [
+      ['인당단가','2,132,250','2,143,200','1,879,252','2,038,300'],
+      ['항공','989,000','989,000','970,000','1,069,000'],
+      ['호텔','312,075','317,550','237,994','351,499'],
+      ['식사','219,000','219,000','227,010','-'],
+      ['차량','301,733','301,733','414,964','683,471'],
+      ['보험','181,040','181,040','90,072','117,166'],
+      ['가이드','876,000','876,000','878,748','732,290'],
+      ['수수료율','4.57%','4.55%','9.00%','7.90%'],
+    ]
+  },
+  '오키나와': {
+    headers: ['항목','하나투어','레드캡','롯데 1안','롯데 2안','롯데 3안','롯데 4안'],
+    rows: [
+      ['인당단가','1,166,233','1,144,912','1,063,617','1,141,053','1,162,085','1,297,837'],
+      ['항공','420,000','400,000','394,000','394,000','394,000','394,000'],
+      ['호텔','198,450','248,560','193,038','215,100','222,454','303,346'],
+      ['식사','132,300','107,550','135,456','178,476','188,036','197,596'],
+      ['차량','1,430,100','1,096,213','956,000','956,000','956,000','956,000'],
+      ['보험','40,446','17,495','40,917','40,917','40,917','40,917'],
+      ['가이드','1,807,313','2,264,200','1,684,600','1,684,600','1,684,600','1,684,600'],
+      ['수수료율','4.63%','2.50%','8.99%','8.38%','8.23%','7.37%'],
+    ]
+  },
+  '나고야': {
+    headers: ['항목','하나투어','레드캡','롯데 1안','롯데 2안','롯데 3안'],
+    rows: [
+      ['인당단가','1,816,730','1,721,927','2,179,336','2,626,744','3,172,938'],
+      ['항공','555,000','730,000','510,300','510,300','510,300'],
+      ['호텔','387,450','401,520','657,728','952,176','1,307,808'],
+      ['식사','113,967','143,400','133,840','133,840','133,840'],
+      ['차량','1,204,875','1,497,733','2,148,132','2,148,132','2,148,132'],
+      ['보험','245,700','-','172,080','172,080','172,080'],
+      ['가이드','1,927,800','2,594,200','2,403,180','2,575,260','2,957,660'],
+      ['수수료율','4.68%','6.00%','4.39%','3.64%','3.01%'],
+    ]
+  }
+};
+
+const DEFAULT_FLIGHT_DATA = {
+  '발리': {
+    headers: ['','하나투어','레드캡','롯데관광'],
+    rows: [
+      ['항공사','대한항공','대한항공','대한항공'],
+      ['편명','KE431/KE432','KE431/KE432','KE431/KE432'],
+      ['출발','16:10→22:10','16:10→22:10','16:10→22:10'],
+      ['귀국','23:45→07:55','23:45→07:55','23:45→07:55'],
+      ['기종','B787-9','B777-200ER','B777-200ER'],
+      ['일정','9/10(수)~9/15(월)','9/3(수) 또는 9/10(수)','9/17(수)~9/22(월)'],
+      ['비용','989,000원','970,000원','1,069,000원'],
+    ]
+  },
+  '오키나와': {
+    headers: ['','하나투어','레드캡','롯데관광'],
+    rows: [
+      ['항공사','진에어','제주항공','진에어'],
+      ['편명','LJ341/LJ342','7C1801/7C1802','LJ341/LJ342'],
+      ['출발','09:45→12:05','13:15→15:45','09:45→12:05'],
+      ['귀국','13:15→15:30','16:45→19:05','13:15→15:30'],
+      ['일정(상)','6/26(금), 6/27(토)','6/12(금), 6/13(토)','6/12(금), 6/13(토)'],
+      ['일정(하)','10/16(금), 10/17(토)','11/13(금), 11/14(토)','10/16(금), 10/17(토) 또는 11/13(금), 11/14(토)'],
+      ['비용','420,000원','400,000원','394,000원'],
+    ]
+  },
+  '나고야': {
+    headers: ['','하나투어','레드캡','롯데관광'],
+    rows: [
+      ['항공사','대한항공','대한항공','제주항공'],
+      ['편명','KE741/KE752','KE741/KE742','7C1201/7C1204'],
+      ['출발','10:35→12:30','10:35→12:30','09:30→11:30'],
+      ['귀국','13:40→15:40','13:40→15:40','18:00→20:15'],
+      ['일정','9/30(수)~10/3(토)','9/19(토)~10/4(일) 중','9/26(토)~9/29(화)'],
+      ['비용','555,000원','730,000원','510,300원'],
+    ]
+  }
+};
+
+const HOTEL_IMAGES = {
+  '발리': {
+    '하나투어': {
+      '쉐라톤 발리 쿠타': ['hotel_images/sheraton_bali_ext.jpg','hotel_images/sheraton_bali_int.jpg'],
+      '웨스틴 우붓': ['hotel_images/westin_ubud_ext.jpg','hotel_images/westin_ubud_int.jpg'],
+      '호텔 인디고 세미냑': ['hotel_images/indigo_seminyak_ext.jpg','hotel_images/indigo_seminyak_int.jpg'],
+      '스탈라 우붓': ['hotel_images/sthala_ubud_ext.jpg','hotel_images/sthala_ubud_int.jpg'],
+    },
+    '레드캡': {
+      '쉐라톤 발리 쿠타': ['hotel_images/sheraton_bali_ext.jpg','hotel_images/sheraton_bali_int.jpg'],
+      '엘리먼트 우붓': ['hotel_images/element_ubud_ext.jpg','hotel_images/element_ubud_int.jpg'],
+      '무벤픽 짐바란': ['hotel_images/movenpick_bali_ext.jpg','hotel_images/movenpick_bali_int.jpg'],
+      '웨스틴 우붓': ['hotel_images/westin_ubud_ext.jpg','hotel_images/westin_ubud_int.jpg'],
+    },
+    '롯데관광': {
+      '파드마 리조트 레기안': ['hotel_images/padma_legian_ext.jpg','hotel_images/padma_legian_int.jpg'],
+      '마야 우붓': ['hotel_images/maya_ubud_ext.jpg','hotel_images/maya_ubud_int.jpg'],
+    },
+  },
+  '오키나와': {
+    '하나투어': {
+      '토리피토 호텔 나하': ['hotel_images/torifito_naha_ext.jpg','hotel_images/torifito_naha_int.jpg'],
+    },
+    '레드캡': {
+      '카리유시 비치': ['hotel_images/kariyushi_ext.jpg','hotel_images/kariyushi_int.jpg'],
+      '류큐 오리온 나하': ['hotel_images/ryukyu_naha_ext.jpg','hotel_images/ryukyu_naha_int.jpg'],
+      '문비치 뮤지엄': ['hotel_images/moonbeach_ext.jpg','hotel_images/moonbeach_int.jpg'],
+      '메르큐어 나하': ['hotel_images/mercure_naha_ext.jpg','hotel_images/mercure_naha_int.jpg'],
+    },
+    '롯데관광': {
+      '아쿠아 치타': ['hotel_images/aquacitta_ext.jpg','hotel_images/aquacitta_int.jpg'],
+      '노보텔 나하': ['hotel_images/novotel_naha_ext.jpg','hotel_images/novotel_naha_int.jpg'],
+      '노보텔 나하 (3차)': ['hotel_images/novotel_naha_ext.jpg','hotel_images/novotel_naha_int.jpg'],
+      '호텔 콜렉티브': ['hotel_images/collective_naha_ext.jpg','hotel_images/collective_naha_int.jpg'],
+    },
+  },
+  '나고야': {
+    '하나투어': {
+      '트래블롯지 나고야 사카에': ['hotel_images/travelodge_nagoya_ext.jpg','hotel_images/travelodge_nagoya_int.jpg'],
+    },
+    '레드캡': {
+      '트래블롯지 나고야 사카에': ['hotel_images/travelodge_nagoya_ext.jpg','hotel_images/travelodge_nagoya_int.jpg'],
+      '닛코 스타일 나고야': ['hotel_images/nikko_nagoya_ext.jpg','hotel_images/nikko_nagoya_int.jpg'],
+    },
+    '롯데관광': {
+      '이비스 스타일스': ['hotel_images/ibis_nagoya_ext.jpg','hotel_images/ibis_nagoya_int.jpg'],
+      '베셀 캄파나': ['hotel_images/vessel_nagoya_ext.jpg','hotel_images/vessel_nagoya_int.jpg'],
+      '더 로열파크 아이코닉': ['hotel_images/royalpark_nagoya_ext.jpg','hotel_images/royalpark_nagoya_int.jpg'],
+    },
+  },
+};
+
+const HOTEL_LOCATIONS = {
+  '발리': {
+    '하나투어': [
+      { name:'쉐라톤 발리 쿠타', lat:-8.7256, lng:115.1689, option:'1안' },
+      { name:'웨스틴 우붓', lat:-8.4845, lng:115.2748, option:'1안' },
+      { name:'호텔 인디고 세미냑', lat:-8.6932, lng:115.1583, option:'2안' },
+      { name:'스탈라 우붓', lat:-8.4750, lng:115.2680, option:'2안' },
+    ],
+    '레드캡': [
+      { name:'쉐라톤 발리 쿠타', lat:-8.7256, lng:115.1689, option:'기본' },
+      { name:'엘리먼트 우붓', lat:-8.4850, lng:115.2750, option:'기본' },
+      { name:'무벤픽 짐바란', lat:-8.7900, lng:115.1650, option:'업그레이드' },
+      { name:'웨스틴 우붓', lat:-8.4845, lng:115.2748, option:'업그레이드' },
+    ],
+    '롯데관광': [
+      { name:'파드마 리조트 레기안', lat:-8.7200, lng:115.1700, option:'기본' },
+      { name:'마야 우붓', lat:-8.5100, lng:115.2650, option:'기본' },
+    ],
+  },
+  '오키나와': {
+    '하나투어': [
+      { name:'토리피토 호텔 나하', lat:26.2130, lng:127.6720, option:'기본' },
+    ],
+    '레드캡': [
+      { name:'카리유시 비치 리조트', lat:26.4428, lng:127.7700, option:'기본' },
+      { name:'류큐 오리온 나하', lat:26.2150, lng:127.6830, option:'기본' },
+      { name:'문비치 뮤지엄', lat:26.4350, lng:127.7530, option:'Alt' },
+      { name:'메르큐어 나하', lat:26.2200, lng:127.6750, option:'Alt' },
+    ],
+    '롯데관광': [
+      { name:'아쿠아 치타', lat:26.2080, lng:127.6700, option:'1안' },
+      { name:'노보텔 나하', lat:26.2250, lng:127.7150, option:'2안' },
+      { name:'로이지르 호텔', lat:26.2030, lng:127.6680, option:'3안' },
+      { name:'호텔 콜렉티브', lat:26.2153, lng:127.6850, option:'4안' },
+    ],
+  },
+  '나고야': {
+    '하나투어': [
+      { name:'트래블롯지 사카에', lat:35.1700, lng:136.9050, option:'기본' },
+    ],
+    '레드캡': [
+      { name:'트래블롯지 사카에', lat:35.1700, lng:136.9050, option:'기본' },
+      { name:'닛코 스타일 나고야', lat:35.1710, lng:136.8840, option:'업그레이드' },
+    ],
+    '롯데관광': [
+      { name:'이비스 스타일스', lat:35.1720, lng:136.8830, option:'1안' },
+      { name:'베셀 캄파나', lat:35.1700, lng:136.8800, option:'2안' },
+      { name:'더 로열파크 아이코닉', lat:35.1706, lng:136.9086, option:'3안' },
+    ],
+  },
+};
+
+const HOTEL_MAP_CENTERS = {
+  '발리': { lat:-8.60, lng:115.22, zoom:11 },
+  '오키나와': { lat:26.33, lng:127.73, zoom:10 },
+  '나고야': { lat:35.171, lng:136.895, zoom:14 },
+};
+
+function getHotelImages(region, agency, hotelName) {
+  const agencyMap = HOTEL_IMAGES[region]?.[agency];
+  if (!agencyMap) return [];
+  if (agencyMap[hotelName]) return agencyMap[hotelName];
+  for (const [key, imgs] of Object.entries(agencyMap)) {
+    if (hotelName.includes(key.substring(0, 6)) || key.includes(hotelName.substring(0, 6))) return imgs;
+  }
+  return Object.values(agencyMap)[0] || [];
+}
+
+const DEFAULT_HOTEL_DATA = {
+  '발리': [
+    { agency:'하나투어', options:[
+      { plan:'1안', name:'쉐라톤 발리 쿠타', stars:5, details:'196실, 46㎡', amenities:['수영장','스파','피트니스','레스토랑'], price:'', color:'#3B82F6' },
+      { plan:'1안', name:'웨스틴 우붓', stars:5, details:'120실, 50㎡', amenities:['수영장','스파','피트니스','레스토랑'], price:'', planTotal:'312,075원', color:'#3B82F6' },
+      { plan:'2안', name:'호텔 인디고 세미냑', stars:5, details:'289실, 50㎡', amenities:['수영장','스파','피트니스','바'], price:'', color:'#60A5FA' },
+      { plan:'2안', name:'스탈라 우붓', stars:5, details:'143실, 36㎡', amenities:['수영장','스파','피트니스'], price:'', planTotal:'317,550원', color:'#60A5FA' },
+    ]},
+    { agency:'레드캡', options:[
+      { plan:'기본', name:'쉐라톤 발리 쿠타', stars:5, details:'196실, 46㎡', amenities:['수영장','스파','피트니스'], price:'', color:'#EF4444' },
+      { plan:'기본', name:'엘리먼트 우붓', stars:5, details:'196실, 34㎡', amenities:['수영장','스파','피트니스'], price:'', planTotal:'237,994원', color:'#EF4444' },
+      { plan:'업그레이드', name:'무벤픽 짐바란', stars:5, details:'297실, 38㎡', amenities:['수영장','스파','피트니스','비치'], price:'', color:'#F87171' },
+      { plan:'업그레이드', name:'웨스틴 우붓', stars:5, details:'120실, 49㎡', amenities:['수영장','스파','피트니스'], price:'', planTotal:'+8만원', color:'#F87171' },
+    ]},
+    { agency:'롯데관광', options:[
+      { plan:'기본', name:'파드마 리조트 레기안', stars:5, details:'파드마 레기안', amenities:['수영장','스파','피트니스','정원'], price:'', color:'#22C55E' },
+      { plan:'기본', name:'마야 우붓', stars:5, details:'마야 우붓', amenities:['수영장','스파','피트니스','정원'], price:'', planTotal:'351,499원', color:'#22C55E' },
+    ]},
+  ],
+  '오키나와': [
+    { agency:'하나투어', options:[
+      { plan:'기본', name:'토리피토 호텔 나하', stars:3, details:'330실, 20㎡', amenities:['조식','코인세탁'], price:'198,450원', color:'#3B82F6' },
+    ]},
+    { agency:'레드캡', options:[
+      { plan:'기본', name:'카리유시 비치', stars:4, details:'515실, 30㎡ (1N)', amenities:['수영장','비치','레스토랑'], price:'', color:'#EF4444' },
+      { plan:'기본', name:'류큐 오리온 나하', stars:4, details:'205실, 23㎡ (2N)', amenities:['레스토랑','코인세탁'], price:'', planTotal:'248,560원', color:'#EF4444' },
+      { plan:'Alt', name:'문비치 뮤지엄', stars:4, details:'255실, 30㎡ (1N)', amenities:['수영장','피트니스','비치'], price:'', color:'#F87171' },
+      { plan:'Alt', name:'메르큐어 나하', stars:4, details:'260실, 21㎡ (2N)', amenities:['피트니스'], price:'', planTotal:'별도협의', color:'#F87171' },
+    ]},
+    { agency:'롯데관광', options:[
+      { plan:'1안', name:'아쿠아 치타', stars:3, details:'나하 시내', amenities:['조식'], price:'193,038원', color:'#22C55E' },
+      { plan:'2안', name:'노보텔 나하', stars:4, details:'나하 시내', amenities:['수영장','피트니스','레스토랑'], price:'215,100원', color:'#4ADE80' },
+      { plan:'3안', name:'노보텔 나하 (3차)', stars:4, details:'나하 시내', amenities:['수영장','피트니스','레스토랑'], price:'222,454원', color:'#86EFAC' },
+      { plan:'4안', name:'호텔 콜렉티브', stars:5, details:'326실, 35㎡', amenities:['수영장','스파','피트니스','라운지'], price:'303,346원', color:'#BBF7D0' },
+    ]},
+  ],
+  '나고야': [
+    { agency:'하나투어', options:[
+      { plan:'기본', name:'트래블롯지 나고야 사카에', stars:3, details:'211실, 17㎡', amenities:['조식','코인세탁'], price:'387,450원', color:'#3B82F6' },
+    ]},
+    { agency:'레드캡', options:[
+      { plan:'기본', name:'트래블롯지 나고야 사카에', stars:3, details:'211실, 17㎡', amenities:['조식','코인세탁'], price:'401,520원', color:'#EF4444' },
+      { plan:'업그레이드', name:'닛코 스타일 나고야', stars:4, details:'191실, 30㎡', amenities:['피트니스','레스토랑','라운지'], price:'+65만원', color:'#F87171' },
+    ]},
+    { agency:'롯데관광', options:[
+      { plan:'1안', name:'이비스 스타일스', stars:3, details:'나고야 시내', amenities:['조식'], price:'657,728원', color:'#22C55E' },
+      { plan:'2안', name:'베셀 캄파나', stars:4, details:'나고야 시내', amenities:['조식','피트니스'], price:'952,176원', color:'#4ADE80' },
+      { plan:'3안', name:'더 로열파크 아이코닉', stars:5, details:'나고야 시내', amenities:['피트니스','레스토랑','라운지','스파'], price:'1,307,808원', color:'#86EFAC' },
+    ]},
+  ]
+};
+
+const DEFAULT_ITINERARY_DATA = {
+  '발리': {
+    '하나투어': {
+      days: [
+        { day:'Day 1', title:'인천→발리', items:['인천 출발 (16:10)','발리 도착 (22:10)','호텔 체크인'], coords:[{lat:-8.7467,lng:115.1667,name:'응우라라이 공항'}] },
+        { day:'Day 2', title:'자유일', items:['리조트 자유시간'], coords:[] },
+        { day:'Day 3', title:'자유일', items:['리조트 자유시간'], coords:[] },
+        { day:'Day 4', title:'우붓 투어', items:['우붓 이동','우붓 왕궁','사라스와티 사원','우붓 시장','몽키포레스트'], coords:[{lat:-8.5069,lng:115.2625,name:'우붓 왕궁'},{lat:-8.5075,lng:115.2636,name:'사라스와티 사원'},{lat:-8.5068,lng:115.2630,name:'우붓 시장'},{lat:-8.5185,lng:115.2589,name:'몽키포레스트'}] },
+        { day:'Day 5', title:'남부 투어+출발', items:['울루와뚜 사원','가루다 공원','빠당빠당 비치','마사지 2시간','공항 이동'], coords:[{lat:-8.8291,lng:115.0849,name:'울루와뚜 사원'},{lat:-8.8103,lng:115.1672,name:'가루다 공원'},{lat:-8.8136,lng:115.0987,name:'빠당빠당 비치'},{lat:-8.7467,lng:115.1667,name:'공항'}] },
+        { day:'Day 6', title:'인천 도착', items:['인천 도착 (07:55)'], coords:[] },
+      ]
+    },
+    '레드캡': {
+      days: [
+        { day:'Day 1', title:'인천→발리', items:['인천 출발','발리 도착','쉐라톤 쿠타 체크인'], coords:[{lat:-8.7467,lng:115.1667,name:'공항'},{lat:-8.7256,lng:115.1689,name:'쉐라톤 쿠타'}] },
+        { day:'Day 2', title:'자유일', items:['자유시간','석식 만찬'], coords:[] },
+        { day:'Day 3', title:'남부+우붓 이동', items:['가루다 공원','울루와뚜 사원','양양비치','우붓 이동(2h)','엘리먼트 우붓 체크인'], coords:[{lat:-8.8103,lng:115.1672,name:'가루다 공원'},{lat:-8.8291,lng:115.0849,name:'울루와뚜 사원'},{lat:-8.4850,lng:115.2750,name:'엘리먼트 우붓'}] },
+        { day:'Day 4', title:'자유일', items:['우붓 자유시간'], coords:[] },
+        { day:'Day 5', title:'우붓 투어+출발', items:['오마데이클럽','띠르따눈 폭포','사라스와티 사원','마사지 2시간','공항 이동'], coords:[{lat:-8.5075,lng:115.2636,name:'사라스와티 사원'},{lat:-8.7467,lng:115.1667,name:'공항'}] },
+        { day:'Day 6', title:'인천 도착', items:['인천 도착'], coords:[] },
+      ]
+    },
+    '롯데관광': {
+      days: [
+        { day:'Day 1', title:'인천→발리', items:['인천 출발','발리 도착','파드마 레기안 체크인'], coords:[{lat:-8.7467,lng:115.1667,name:'공항'},{lat:-8.7200,lng:115.1700,name:'파드마 레기안'}] },
+        { day:'Day 2', title:'남부 투어', items:['가루다 공원','울루와뚜 사원','빠당빠당 비치','마사지','호텔 만찬'], coords:[{lat:-8.8103,lng:115.1672,name:'가루다 공원'},{lat:-8.8291,lng:115.0849,name:'울루와뚜 사원'},{lat:-8.8136,lng:115.0987,name:'빠당빠당 비치'}] },
+        { day:'Day 3', title:'자유일', items:['자유시간'], coords:[] },
+        { day:'Day 4', title:'우붓 이동', items:['우붓 이동','마야 우붓 체크인'], coords:[{lat:-8.5100,lng:115.2650,name:'마야 우붓'}] },
+        { day:'Day 5', title:'우붓 투어+출발', items:['뜨갈랄랑 라이스테라스','우붓 왕궁','시장','사라스와티 사원','뜨게눙안 폭포','공항 이동'], coords:[{lat:-8.4312,lng:115.2788,name:'뜨갈랄랑'},{lat:-8.5069,lng:115.2625,name:'우붓 왕궁'},{lat:-8.5075,lng:115.2636,name:'사라스와티 사원'},{lat:-8.5756,lng:115.2893,name:'뜨게눙안 폭포'},{lat:-8.7467,lng:115.1667,name:'공항'}] },
+        { day:'Day 6', title:'인천 도착', items:['인천 도착'], coords:[] },
+      ]
+    }
+  },
+  '오키나와': {
+    '하나투어': {
+      days: [
+        { day:'Day 1', title:'오키나와 도착+남부', items:['오키나와 도착','치넨미사키','오키나와 월드','교쿠센도 동굴'], coords:[{lat:26.1958,lng:127.6459,name:'나하 공항'},{lat:26.1406,lng:127.7483,name:'오키나와 월드'}] },
+        { day:'Day 2', title:'자유일', items:['자유시간'], coords:[] },
+        { day:'Day 3', title:'북부 투어', items:['만좌모','츄라우미 수족관','비세후쿠기'], coords:[{lat:26.5044,lng:127.7533,name:'만좌모'},{lat:26.6942,lng:127.8775,name:'츄라우미 수족관'},{lat:26.7028,lng:127.8803,name:'비세후쿠기'}] },
+        { day:'Day 4', title:'나하+출발', items:['슈리성','공항 이동'], coords:[{lat:26.2172,lng:127.7194,name:'슈리성'},{lat:26.1958,lng:127.6459,name:'공항'}] },
+      ]
+    },
+    '레드캡': {
+      days: [
+        { day:'Day 1', title:'오키나와 도착', items:['오키나와 도착','카리유시 비치 체크인'], coords:[{lat:26.1958,lng:127.6459,name:'나하 공항'},{lat:26.4428,lng:127.7700,name:'카리유시 비치'}], batch:'1차수' },
+        { day:'Day 2', title:'북부+나하 이동', items:['츄라우미 수족관','만좌모','나하 이동'], coords:[{lat:26.6942,lng:127.8775,name:'츄라우미 수족관'},{lat:26.5044,lng:127.7533,name:'만좌모'}], batch:'1차수' },
+        { day:'Day 3', title:'자유일', items:['국제거리 자유시간'], coords:[{lat:26.2153,lng:127.6850,name:'국제거리'}], batch:'1차수' },
+        { day:'Day 4', title:'출발', items:['세나가지마 우미카지테라스','공항'], coords:[{lat:26.1778,lng:127.6383,name:'우미카지테라스'},{lat:26.1958,lng:127.6459,name:'공항'}], batch:'1차수' },
+        { day:'Day 1', title:'오키나와 도착', items:['(2차수 일정 입력)'], coords:[], batch:'2차수' },
+        { day:'Day 2', title:'(제목 입력)', items:['(2차수 일정 입력)'], coords:[], batch:'2차수' },
+        { day:'Day 3', title:'(제목 입력)', items:['(2차수 일정 입력)'], coords:[], batch:'2차수' },
+        { day:'Day 4', title:'(제목 입력)', items:['(2차수 일정 입력)'], coords:[], batch:'2차수' },
+      ]
+    },
+    '롯데관광': {
+      days: [
+        { day:'Day 1', title:'오키나와 도착+남부', items:['오키나와 도착','오키나와 월드','나미노우에 신사'], coords:[{lat:26.1958,lng:127.6459,name:'나하 공항'},{lat:26.1406,lng:127.7483,name:'오키나와 월드'},{lat:26.2261,lng:127.6714,name:'나미노우에 신사'}] },
+        { day:'Day 2', title:'북부 종일 투어', items:['츄라우미 수족관','비세후쿠기','코우리 브릿지','만좌모','우미카지테라스'], coords:[{lat:26.6942,lng:127.8775,name:'츄라우미 수족관'},{lat:26.7028,lng:127.8803,name:'비세후쿠기'},{lat:26.7067,lng:128.0183,name:'코우리 브릿지'},{lat:26.5044,lng:127.7533,name:'만좌모'},{lat:26.1778,lng:127.6383,name:'우미카지테라스'}] },
+        { day:'Day 3', title:'자유일', items:['자유시간'], coords:[] },
+        { day:'Day 4', title:'나하+출발', items:['슈리성','공항'], coords:[{lat:26.2172,lng:127.7194,name:'슈리성'},{lat:26.1958,lng:127.6459,name:'공항'}] },
+      ]
+    }
+  },
+  '나고야': {
+    '하나투어': {
+      days: [
+        { day:'Day 1', title:'나고야 도착+경기', items:['나고야 도착','아시안게임 축구 준결승'], coords:[{lat:34.8583,lng:136.8125,name:'주부 공항'},{lat:35.1700,lng:136.9100,name:'경기장'}] },
+        { day:'Day 2', title:'아시안게임', items:['아시안게임 양궁','아시안게임 유도'], coords:[{lat:35.1700,lng:136.9100,name:'경기장'}] },
+        { day:'Day 3', title:'자유일', items:['나고야성','오아시스21'], coords:[{lat:35.1856,lng:136.8994,name:'나고야성'},{lat:35.1706,lng:136.9086,name:'오아시스21'}] },
+        { day:'Day 4', title:'출발', items:['공항 이동'], coords:[{lat:34.8583,lng:136.8125,name:'공항'}] },
+      ]
+    },
+    '레드캡': {
+      days: [
+        { day:'Day 1', title:'나고야 도착', items:['나고야 도착','시내관광','아시안게임 관람 #1'], coords:[{lat:34.8583,lng:136.8125,name:'주부 공항'},{lat:35.1700,lng:136.9100,name:'경기장'}] },
+        { day:'Day 2', title:'아시안게임', items:['아시안게임 관람 #2','아시안게임 관람 #3'], coords:[{lat:35.1700,lng:136.9100,name:'경기장'}] },
+        { day:'Day 3', title:'자유일', items:['자유시간'], coords:[] },
+        { day:'Day 4', title:'출발', items:['공항 이동'], coords:[{lat:34.8583,lng:136.8125,name:'공항'}] },
+      ]
+    },
+    '롯데관광': {
+      days: [
+        { day:'Day 1', title:'나고야 도착+시내', items:['나고야 도착','토요타 산업기술기념관','미라이 타워','사카에'], coords:[{lat:34.8583,lng:136.8125,name:'주부 공항'},{lat:35.1783,lng:136.8678,name:'토요타 기념관'},{lat:35.1706,lng:136.9086,name:'미라이 타워'}] },
+        { day:'Day 2', title:'나고야성+경기', items:['나고야성','아시안게임 야구'], coords:[{lat:35.1856,lng:136.8994,name:'나고야성'},{lat:35.1700,lng:136.9100,name:'경기장'}] },
+        { day:'Day 3', title:'아시안게임', items:['아시안게임 양궁','아시안게임 배드민턴'], coords:[{lat:35.1700,lng:136.9100,name:'경기장'}] },
+        { day:'Day 4', title:'관광+출발', items:['노리타케 가든','공항'], coords:[{lat:35.1808,lng:136.8772,name:'노리타케 가든'},{lat:34.8583,lng:136.8125,name:'공항'}] },
+      ]
+    }
+  }
+};
+
+const DEFAULT_OVERVIEW_DATA = [
+  ['공고명','2026년 OK금융그룹 해외연수 프로그램 운영 업체 선정 입찰 공고'],
+  ['연수대상','2026년 상반기 승진자(장기근속 포상 기수령자 제외) 및 우수사원\nNon-PL직군 Lv3 이상(23명), PL직군 Lv2 이상 승진자(48명), 우수사원(미정)'],
+  ['입찰규모','약 1억 6천만원'],
+  ['입찰방식','일반경쟁입찰'],
+  ['선정기간','입찰공고 2026.02.12~03.06 / 제안검토 2026.03.06~04.03'],
+  ['연수지역','Non-PL 승진자 → 발리 | PL 승진자 → 오키나와 | 우수사원 → 나고야'],
+  ['선정기준','해외연수 운영경험, 단가 등 타사 대비 경쟁력과 내고 용이성 고려'],
+];
+
+const DEFAULT_AGENCY_CARDS = [
+  { name:'하나투어 (A)', sub:"Korea's #1 Travel Agency", desc:'국내 최대 여행사, 풍부한 해외연수 운영 경험, 안정적 운영 역량', color:'#3B82F6',
+    detail: {
+      company: '하나투어', ceo: '-', founded: '1993년', listed: 'KOSPI',
+      revenue: '-', assets: '-',
+      business: '여행, 항공, 호텔, 렌터카',
+      strengths: ['국내 1위 종합 여행사', '해외연수 전문 운영팀 보유', '대한항공 직항 위주 안정적 항공 배정', '24시간 긴급 상황 대응 핫라인'],
+      concept: 'OK : UNLIMIT — 한계를 뛰어넘는 경험, OK가 만드는 더 넓은 세상',
+      team: {
+        structure: ['운영팀', '항공팀', '랜드팀', '일정관리팀'],
+        pm: { name: '유환진', title: '팀장', exp: '21년', dept: '하나투어 법인영업 2팀' },
+        members: [
+          { name: '김현택', title: '선임', exp: '13년', role: '기획 및 제안' },
+          { name: '문채린', title: '대리', exp: '7년', role: '오퍼레이터(운영)' },
+        ]
+      },
+      track: [
+        { client: '대구과학고등학교', pax: 107, dest: '미국 동부', year: 2025, amount: '5.4억' },
+        { client: '교보생명 우수사원', pax: '-', dest: '해외연수', year: '다수', amount: '-' },
+      ],
+      insurance: '3억원 프리미엄 (사망3억/해외의료3천만/휴대품100만)',
+      emergency: '24시간 비상 연락망 (본사+현지 DMC), 질병·사고·여권분실 프로토콜 보유',
+      extras: ['네임택/여행가방/E-ticket 제공', '전용 상담센터 02-2076-0000', '개인정보보호 1등급'],
+    }
+  },
+  { name:'레드캡 (B)', sub:'MICE Specialist', desc:'기업 연수/단체 여행 전문, MICE 특화 서비스, 맞춤형 프로그램 운영', color:'#EF4444',
+    detail: {
+      company: '레드캡투어(주)', ceo: '인유성', founded: '1977년 2월', listed: 'KOSDAQ (2007)',
+      revenue: '3,589억원', assets: '-',
+      business: 'MICE, 기업단체여행, 렌터카',
+      strengths: ['MICE(기업행사) 전문 에이전시', 'LG/GS/LS/CJ/한솔/코카콜라/에르메스/J&J 등 글로벌 대기업 다수 수행', '선 조치 후 보고 응급 정책'],
+      concept: 'Refresh for Global Growth 2026 — 승진자와 우수사원을 위한 단, 하나의 여정',
+      team: {
+        structure: ['항공팀', '수배팀', '운영팀', '광주/부산/대구/대전 지사'],
+        pm: { name: '천준호', title: '팀장', exp: '-', dept: 'MICE사업부' },
+        members: [
+          { name: '차은욱', title: '책임', exp: '-', role: '항공 좌석확보/발권/예약변경' },
+          { name: '조영숙', title: '책임', exp: '-', role: '항공 좌석확보/발권' },
+          { name: '구희주', title: '선임', exp: '-', role: '호텔/관광/차량/가이드 수배' },
+          { name: '이지원', title: '선임', exp: '-', role: '수배 및 비상연락' },
+          { name: '김시판', title: '실장', exp: '-', role: '행사 현장 운영' },
+          { name: '이병렬', title: '차장', exp: '-', role: '비상 상황 대응' },
+        ]
+      },
+      track: [
+        { client: 'L사(전자)', pax: 90, dest: '태국 푸켓', year: 2026, amount: '-' },
+        { client: 'L사(제조)', pax: 5800, dest: '베트남 호치민+후에', year: 2024, amount: '-' },
+        { client: 'H사(병원)', pax: 2300, dest: '제주', year: 2025, amount: '-' },
+        { client: 'K사(통신)', pax: 108, dest: '태국 치앙마이', year: 2025, amount: '-' },
+        { client: 'A사(식품)', pax: 200, dest: '일본 오사카', year: 2025, amount: '-' },
+        { client: 'E사(가스)', pax: 120, dest: '벨리즈/베트남/하와이', year: 2025, amount: '-' },
+      ],
+      insurance: '1억원 여행자보험',
+      emergency: '비행기 지연/취소 대응, 환자 발생 3단계 프로토콜, 가이드 즉시 교체 체계',
+      extras: ['지역별 긴급병원 리스트 확보 (발리: 실로암병원, 오키나와: 나하시립병원, 나고야: 센트럴병원)', '카카오톡 그룹/앱 실시간 소통'],
+    }
+  },
+  { name:'롯데관광 (C)', sub:'Comprehensive Tourism Group', desc:'롯데그룹 계열 종합 관광사, 대규모 단체 운영 역량, 그룹사 시너지', color:'#22C55E',
+    detail: {
+      company: '롯데관광개발(주)', ceo: '김기병, 백현, 김현호', founded: '1971년 5월', listed: 'KOSPI',
+      revenue: '-', assets: '1조 8,228억원 (2025.06 기준)',
+      business: '여행, 개발, 면세, 교육, 크루즈, 호텔',
+      strengths: ['롯데그룹 계열 종합 관광 개발사', '총 자산 1.8조원 대형 그룹사', '200+ 해외 네트워크', '그랜드 하얏트 제주/제주 드림타워 운영'],
+      concept: 'Discover Your Ultimate Travel Partner for Every Adventure — CARE',
+      team: {
+        structure: ['1사업부', '2사업부', '항공팀', 'PR/마케팅', 'IT+MICE연계', '고객만족팀'],
+        pm: { name: '권기경', title: '상무', exp: '-', dept: '총괄 디렉터' },
+        members: [
+          { name: '안병상', title: '본부장', exp: '-', role: '운영 총괄 디렉터' },
+          { name: '임경렬', title: '-', exp: '-', role: '1사업부' },
+          { name: '한예슬', title: '-', exp: '-', role: '1사업부' },
+          { name: '홍서연', title: '-', exp: '-', role: '1사업부' },
+          { name: '김명진', title: '-', exp: '-', role: '2사업부' },
+          { name: '신선영', title: '-', exp: '-', role: '2사업부' },
+          { name: '최은실/이연주/최경희', title: '-', exp: '-', role: '항공팀' },
+        ]
+      },
+      track: [
+        { client: '삼천리 가스 70주년', pax: 889, dest: '해외', year: 2025, amount: '-' },
+        { client: 'DB손해보험', pax: 131, dest: '코타키나발루', year: 2025, amount: '-' },
+        { client: '한모테크놀로지', pax: 71, dest: '두바이+아프리카', year: 2025, amount: '-' },
+        { client: '금융연수원', pax: 77, dest: '일본', year: 2025, amount: '-' },
+        { client: '조선일보', pax: 211, dest: '일본 큐슈', year: 2025, amount: '-' },
+        { client: 'HY프레시 매니저', pax: 400, dest: '세부', year: 2023, amount: '-' },
+      ],
+      insurance: '1억원 여행자보험',
+      emergency: '선 조치 후 보고 원칙, 현지 파트너 24시간 대기, 긴급 병원 리스트 확보',
+      extras: ['카카오톡/앱 실시간 일정 공유', '출발 전 이벤트(경품/스타벅스 기프티콘)', '전담 모바일 앱 제공'],
+    }
+  },
+];
+
+const MAP_CENTERS = {
+  '발리': { lat:-8.65, lng:115.2, zoom:10 },
+  '오키나와': { lat:26.4, lng:127.8, zoom:10 },
+  '나고야': { lat:35.05, lng:136.88, zoom:10 },
+};
+
+// ============ DATA LOAD/SAVE HELPERS ============
+function loadData(key, fallback) {
+  try {
+    const s = localStorage.getItem(key);
+    if (s) return JSON.parse(s);
+  } catch(e) {}
+  return JSON.parse(JSON.stringify(fallback));
+}
+
+function saveData(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+// ============ PPTX EXPORT ============
+function exportPPTX(quoteData, flightData, hotelData, itineraryData, overviewData, agencyCards, evalState, notes) {
+  const pptx = new PptxGenJS();
+  pptx.defineLayout({ name:'CUSTOM', width:13.33, height:7.5 });
+  pptx.layout = 'CUSTOM';
+
+  const OK_ORANGE = 'F26522';
+  const DARK = '333333';
+  const WHITE = 'FFFFFF';
+  const LIGHT_ORANGE = 'FFF3EC';
+  const fontFace = 'Malgun Gothic';
+
+  function addHeaderBar(slide, title) {
+    slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:'100%', h:0.06, fill:{ color: OK_ORANGE } });
+    slide.addText(title, { x:0.6, y:0.3, w:12, h:0.6, fontSize:24, fontFace, color:DARK, bold:true });
+    slide.addShape(pptx.ShapeType.rect, { x:0.6, y:0.95, w:2, h:0.04, fill:{ color: OK_ORANGE } });
+  }
+
+  // Slide 1: Cover
+  const s1 = pptx.addSlide();
+  s1.addShape(pptx.ShapeType.rect, { x:0, y:0, w:'100%', h:'100%', fill:{ color: WHITE } });
+  s1.addShape(pptx.ShapeType.rect, { x:0, y:0, w:0.15, h:'100%', fill:{ color: OK_ORANGE } });
+  s1.addShape(pptx.ShapeType.rect, { x:0, y:3.0, w:'100%', h:0.06, fill:{ color: OK_ORANGE } });
+  s1.addText('2026년 OK금융그룹\n해외연수 프로그램\n운영 업체 평가 보고서', { x:1.0, y:1.0, w:11, h:2.0, fontSize:32, fontFace, color:DARK, bold:true, lineSpacing:42 });
+  s1.addText(new Date().toLocaleDateString('ko-KR') + ' | 인재개발팀', { x:1.0, y:3.4, w:11, h:0.5, fontSize:14, fontFace, color:'888888' });
+
+  // Slide 2: Overview
+  const s2 = pptx.addSlide();
+  addHeaderBar(s2, '입찰 개요');
+  const overviewRows = [[ { text:'항목', options:{ bold:true, color:WHITE, fill:{ color: OK_ORANGE } } }, { text:'내용', options:{ bold:true, color:WHITE, fill:{ color: OK_ORANGE } } } ]];
+  overviewData.forEach(([k,v]) => {
+    overviewRows.push([{ text:k, options:{ bold:true, color:DARK } }, { text: v.replace(/\n/g,' / '), options:{ color:DARK } }]);
+  });
+  s2.addTable(overviewRows, { x:0.6, y:1.3, w:12, fontSize:11, fontFace, border:{ pt:0.5, color:'CCCCCC' }, colW:[2.5,9.5], rowH:0.45 });
+
+  // Slide 3: Evaluation
+  const s3 = pptx.addSlide();
+  addHeaderBar(s3, '평가 결과');
+  const weights = evalState?.weights || Object.fromEntries(CRITERIA.map(c=>[c.id,c.defaultWeight]));
+  const scores = evalState?.scores || {};
+  const computeTotal = (agency) => {
+    let sum = 0;
+    CRITERIA.forEach(c => { sum += (scores[`${agency}_${c.id}`] || 3) * (weights[c.id] || 0) / 100; });
+    return Math.round(sum * 100) / 100;
+  };
+  const evalRows = [[ { text:'평가항목', options:{bold:true,color:WHITE,fill:{color:OK_ORANGE}} }, { text:'가중치(%)', options:{bold:true,color:WHITE,fill:{color:OK_ORANGE}} },
+    ...AGENCIES.map(a => ({ text:a, options:{bold:true,color:WHITE,fill:{color:OK_ORANGE}} })) ]];
+  CRITERIA.forEach(c => {
+    evalRows.push([ { text:c.label, options:{bold:true} }, { text:String(weights[c.id]||c.defaultWeight), options:{align:'center'} },
+      ...AGENCIES.map(a => ({ text:String(scores[`${a}_${c.id}`]||3), options:{align:'center'} })) ]);
+  });
+  const totals = AGENCIES.map(a=>({agency:a,total:computeTotal(a)}));
+  totals.sort((a,b)=>b.total-a.total);
+  evalRows.push([ { text:'종합점수', options:{bold:true, fill:{color:LIGHT_ORANGE}} }, { text:'', options:{fill:{color:LIGHT_ORANGE}} },
+    ...AGENCIES.map(a => ({ text:computeTotal(a).toFixed(2) + '점', options:{bold:true, align:'center', fill:{color:LIGHT_ORANGE}} })) ]);
+  s3.addTable(evalRows, { x:0.6, y:1.3, w:12, fontSize:11, fontFace, border:{pt:0.5,color:'CCCCCC'}, colW:[2.5,1.5,2.67,2.67,2.67], rowH:0.42 });
+  s3.addText(`종합 1위: ${totals[0].agency} (${totals[0].total.toFixed(2)}점)`, { x:0.6, y:5.5, w:12, h:0.5, fontSize:16, fontFace, color:OK_ORANGE, bold:true });
+
+  // Slides 4-6: Quote comparison
+  REGIONS.forEach(region => {
+    const s = pptx.addSlide();
+    addHeaderBar(s, `견적 비교 - ${region}`);
+    const qd = quoteData[region];
+    const qRows = [qd.headers.map(h => ({ text:h, options:{bold:true, color:WHITE, fill:{color:OK_ORANGE}, fontSize:9} }))];
+    qd.rows.forEach((row, ri) => {
+      qRows.push(row.map((cell, ci) => ({
+        text: ci > 0 && ri < 7 && cell !== '-' && !cell.includes('%') ? cell + '원' : cell,
+        options: { fontSize:9, align: ci===0?'left':'center', bold: ci===0||ri===0 }
+      })));
+    });
+    const colCount = qd.headers.length;
+    const availW = 12;
+    const colW = qd.headers.map((_,i) => i===0 ? 1.8 : (availW-1.8)/(colCount-1));
+    s.addTable(qRows, { x:0.6, y:1.3, w:12, fontSize:10, fontFace, border:{pt:0.5,color:'CCCCCC'}, colW, rowH:0.38 });
+  });
+
+  // Slides 7-9: Flight comparison
+  REGIONS.forEach(region => {
+    const s = pptx.addSlide();
+    addHeaderBar(s, `항공 비교 - ${region}`);
+    const fd = flightData[region];
+    const fRows = [fd.headers.map(h => ({ text:h, options:{bold:true, color:WHITE, fill:{color:OK_ORANGE}} }))];
+    fd.rows.forEach(row => {
+      fRows.push(row.map((cell, ci) => ({ text:cell, options:{ align:ci===0?'left':'center', bold:ci===0 } })));
+    });
+    const colCount = fd.headers.length;
+    const colW = fd.headers.map((_,i) => i===0 ? 1.8 : (12-1.8)/(colCount-1));
+    s.addTable(fRows, { x:0.6, y:1.3, w:12, fontSize:11, fontFace, border:{pt:0.5,color:'CCCCCC'}, colW, rowH:0.42 });
+  });
+
+  // Slides 10-12: Hotel comparison
+  REGIONS.forEach(region => {
+    const s = pptx.addSlide();
+    addHeaderBar(s, `호텔 비교 - ${region}`);
+    let yPos = 1.3;
+    hotelData[region].forEach(group => {
+      s.addText(group.agency, { x:0.6, y:yPos, w:12, h:0.35, fontSize:14, fontFace, color: AGENCY_COLORS[group.agency]?.replace('#','') || DARK, bold:true });
+      yPos += 0.35;
+      group.options.forEach(h => {
+        const info = `${h.name}  (${'★'.repeat(h.stars)})\n${h.details} | ${h.amenities.join(', ')} | ${h.price}`;
+        s.addText(info, { x:0.8, y:yPos, w:11.5, h:0.55, fontSize:10, fontFace, color:DARK, lineSpacing:14 });
+        yPos += 0.55;
+      });
+      yPos += 0.1;
+    });
+  });
+
+  // Slides 13-15: Tour/Itinerary
+  REGIONS.forEach(region => {
+    const s = pptx.addSlide();
+    addHeaderBar(s, `관광+일정 비교 - ${region}`);
+    let yPos = 1.3;
+    AGENCIES.forEach(agency => {
+      const itin = itineraryData[region]?.[agency];
+      if (!itin) return;
+      s.addText(agency, { x:0.6, y:yPos, w:12, h:0.35, fontSize:13, fontFace, color: AGENCY_COLORS[agency]?.replace('#','') || DARK, bold:true });
+      yPos += 0.35;
+      itin.days.forEach(day => {
+        const items = day.items.join(' > ');
+        s.addText(`${day.day} ${day.title}: ${items}`, { x:0.8, y:yPos, w:11.5, h:0.3, fontSize:9, fontFace, color:DARK });
+        yPos += 0.28;
+      });
+      yPos += 0.15;
+    });
+  });
+
+  // Slide 16: Etc
+  const s16 = pptx.addSlide();
+  addHeaderBar(s16, '기타 평가');
+  const feeRates = {
+    '하나투어': { '발리': '4.57%', '오키나와': '4.63%', '나고야': '4.68%' },
+    '레드캡': { '발리': '9.00%', '오키나와': '2.50%', '나고야': '6.00%' },
+    '롯데관광': { '발리': '7.90%', '오키나와': '8.99%', '나고야': '4.39%' },
+  };
+  const feeRows = [[ { text:'지역', options:{bold:true,color:WHITE,fill:{color:OK_ORANGE}} }, ...AGENCIES.map(a=>({ text:a, options:{bold:true,color:WHITE,fill:{color:OK_ORANGE}} })) ]];
+  REGIONS.forEach(r => {
+    feeRows.push([ { text:r, options:{bold:true} }, ...AGENCIES.map(a=>({ text:feeRates[a][r], options:{align:'center'} })) ]);
+  });
+  s16.addTable(feeRows, { x:0.6, y:1.3, w:8, fontSize:11, fontFace, border:{pt:0.5,color:'CCCCCC'}, colW:[2,2,2,2], rowH:0.4 });
+
+  let noteY = 3.2;
+  if (notes) {
+    const noteTexts = [];
+    AGENCIES.forEach(a => {
+      if (notes[`safety_${a}`]) noteTexts.push(`[안전] ${a}: ${notes[`safety_${a}`]}`);
+      if (notes[`fee_${a}`]) noteTexts.push(`[수수료] ${a}: ${notes[`fee_${a}`]}`);
+      if (notes[`internal_${a}`]) noteTexts.push(`[내부평가] ${a}: ${notes[`internal_${a}`]}`);
+    });
+    if (noteTexts.length > 0) {
+      s16.addText('평가 메모', { x:0.6, y:noteY, w:12, h:0.35, fontSize:13, fontFace, color:DARK, bold:true });
+      noteY += 0.4;
+      s16.addText(noteTexts.join('\n'), { x:0.6, y:noteY, w:12, h:3.0, fontSize:9, fontFace, color:DARK, valign:'top', lineSpacing:14 });
+    }
+  }
+
+  pptx.writeFile({ fileName: '2026_OK금융그룹_해외연수_평가보고서.pptx' });
+}
+
+// ============ HELPER COMPONENTS ============
+
+function TabBar({ tabs, active, onChange }) {
+  return (
+    <div className="flex gap-1 mb-4 border-b border-gray-200 pb-0">
+      {tabs.map(t => (
+        <button key={t} onClick={() => onChange(t)}
+          className={`tab-btn px-4 py-2 text-sm font-medium rounded-t-lg border border-b-0 ${active===t ? 'active' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'}`}>
+          {t}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function ImageLightbox({ images, initialIndex, hotelName, onClose }) {
+  const [idx, setIdx] = useState(initialIndex || 0);
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') setIdx(p => (p + 1) % images.length);
+      if (e.key === 'ArrowLeft') setIdx(p => (p - 1 + images.length) % images.length);
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [images.length, onClose]);
+
+  if (!images || images.length === 0) return null;
+  return (
+    <div className="lightbox-overlay" onClick={onClose}>
+      <div className="lightbox-content" onClick={e => e.stopPropagation()}>
+        <div className="text-white text-center mb-3">
+          <span className="font-bold text-lg">{hotelName}</span>
+          <span className="text-white/60 text-sm ml-3">{idx + 1} / {images.length}</span>
+        </div>
+        <div className="relative flex items-center justify-center" style={{minHeight:'400px'}}>
+          {images.length > 1 && (
+            <div className="lightbox-nav" style={{left:'-56px'}} onClick={() => setIdx(p => (p - 1 + images.length) % images.length)}>&#8249;</div>
+          )}
+          <img src={images[idx]} alt={hotelName} className="lightbox-img" onError={e => { e.target.style.display='none'; }} />
+          {images.length > 1 && (
+            <div className="lightbox-nav" style={{right:'-56px'}} onClick={() => setIdx(p => (p + 1) % images.length)}>&#8250;</div>
+          )}
+        </div>
+        {images.length > 1 && (
+          <div className="flex gap-2 mt-3 justify-center flex-wrap" style={{maxWidth:'700px',margin:'12px auto 0'}}>
+            {images.map((img, i) => (
+              <img key={i} src={img} alt="" className={`lightbox-thumb ${i === idx ? 'active' : ''}`}
+                onClick={() => setIdx(i)} onError={e => { e.target.style.display='none'; }} />
+            ))}
+          </div>
+        )}
+        <button onClick={onClose} className="absolute top-0 right-0 text-white text-3xl w-12 h-12 flex items-center justify-center hover:text-ok-orange transition" style={{position:'absolute',top:'-8px',right:'-48px'}}>&times;</button>
+      </div>
+    </div>
+  );
+}
+
+function SectionTitle({ children }) {
+  return <h2 className="text-2xl font-bold text-ok-dark mb-6 pb-2 border-b-2 border-ok-orange">{children}</h2>;
+}
+
+function formatNum(v) {
+  if (!v || v==='-') return '-';
+  return v;
+}
+
+// ============ PASSWORD MODAL ============
+function PasswordModal({ onSuccess, onClose }) {
+  const [pw, setPw] = useState('');
+  const [error, setError] = useState(false);
+  const inputRef = useRef(null);
+  useEffect(() => { inputRef.current?.focus(); }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (pw === 'dlsworoqkf1!') {
+      onSuccess();
+    } else {
+      setError(true);
+      setPw('');
+      inputRef.current?.focus();
+    }
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-box" onClick={e => e.stopPropagation()}>
+        <h3 className="text-xl font-bold text-ok-dark mb-2">관리자 인증</h3>
+        <p className="text-sm text-gray-500 mb-4">편집 모드에 접근하려면 비밀번호를 입력하세요.</p>
+        <form onSubmit={handleSubmit}>
+          <input ref={inputRef} type="password" value={pw} onChange={e => { setPw(e.target.value); setError(false); }}
+            className={`w-full border-2 rounded-lg p-3 text-sm outline-none transition ${error ? 'border-red-400 bg-red-50' : 'border-gray-200 focus:border-ok-orange'}`}
+            placeholder="비밀번호 입력..." />
+          {error && <p className="text-red-500 text-xs mt-2">비밀번호가 올바르지 않습니다.</p>}
+          <div className="flex gap-3 mt-5">
+            <button type="button" onClick={onClose} className="flex-1 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">취소</button>
+            <button type="submit" className="flex-1 py-2.5 bg-ok-orange text-white rounded-lg text-sm font-medium hover:opacity-90">확인</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+// ============ MAIN APP ============
+function App() {
+  const [activeSection, setActiveSection] = useState('overview');
+  const [isEditMode, setIsEditMode] = useState(() => sessionStorage.getItem('ok_edit_mode') === 'true');
+  const [showPwModal, setShowPwModal] = useState(false);
+
+  // Editable data states - load from localStorage with fallbacks
+  const [quoteData, setQuoteData] = useState(() => loadData('ok_quote_edits', DEFAULT_QUOTE_DATA));
+  const [flightData, setFlightData] = useState(() => loadData('ok_flight_edits', DEFAULT_FLIGHT_DATA));
+  const [hotelData, setHotelData] = useState(() => loadData('ok_hotel_edits', DEFAULT_HOTEL_DATA));
+  const [itineraryData, setItineraryData] = useState(() => loadData('ok_itinerary_v2', DEFAULT_ITINERARY_DATA));
+  const [overviewData, setOverviewData] = useState(() => loadData('ok_overview_edits', DEFAULT_OVERVIEW_DATA));
+  const [agencyCards, setAgencyCards] = useState(() => loadData('ok_agency_cards_edits', DEFAULT_AGENCY_CARDS));
+
+  // Auto-save to localStorage
+  useEffect(() => { saveData('ok_quote_edits', quoteData); }, [quoteData]);
+  useEffect(() => { saveData('ok_flight_edits', flightData); }, [flightData]);
+  useEffect(() => { saveData('ok_hotel_edits', hotelData); }, [hotelData]);
+  useEffect(() => { saveData('ok_itinerary_v2', itineraryData); }, [itineraryData]);
+  useEffect(() => { saveData('ok_overview_edits', overviewData); }, [overviewData]);
+  useEffect(() => { saveData('ok_agency_cards_edits', agencyCards); }, [agencyCards]);
+
+  // 시트 저장 버튼 핸들러
+  const [sheetSaveStatus, setSheetSaveStatus] = useState('');
+  const handleSaveToSheets = async () => {
+    setSheetSaveStatus('저장 중...');
+    const result = await saveAllToSheets(quoteData, flightData, hotelData, itineraryData, overviewData, agencyCards);
+    if (result.success) {
+      setSheetSaveStatus('저장 완료!');
+    } else {
+      setSheetSaveStatus('저장 실패');
+    }
+    setTimeout(() => setSheetSaveStatus(''), 3000);
+  };
+
+  useEffect(() => {
+    sessionStorage.setItem('ok_edit_mode', isEditMode ? 'true' : 'false');
+  }, [isEditMode]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = SECTIONS.map(s => document.getElementById(s.id));
+      let current = 'overview';
+      for (const sec of sections) {
+        if (sec && sec.getBoundingClientRect().top <= 120) {
+          current = sec.id;
+        }
+      }
+      setActiveSection(current);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior:'smooth' });
+  };
+
+  const handleLockClick = () => {
+    if (isEditMode) {
+      setIsEditMode(false);
+    } else {
+      setShowPwModal(true);
+    }
+  };
+
+  const handlePwSuccess = () => {
+    setShowPwModal(false);
+    setIsEditMode(true);
+  };
+
+  const [internalScores, setInternalScores] = useState({ '하나투어': 0, '레드캡': 0, '롯데관광': 0 });
+  const [internalEvalData, setInternalEvalData] = useState([]);
+  const [scoreDefData, setScoreDefData] = useState([]);
+  const [safetySubmission, setSafetySubmission] = useState({
+    '하나투어': { manual: false, hospital: false },
+    '레드캡': { manual: false, hospital: false },
+    '롯데관광': { manual: false, hospital: false },
+  });
+
+  // Google Sheets에서 데이터 로딩 (시트 값이 있으면 하드코딩 대체)
+  const [sheetLoaded, setSheetLoaded] = useState(false);
+  useEffect(() => {
+    async function loadFromSheets() {
+      try {
+        const [bali, oki, nagoya, flight, evalSheet, internalSheet,
+               overviewSheet, agencySheet, hotelSheet, hotelImgSheet, hotelLocSheet,
+               itiBali, itiOki, itiNagoya, safetySheet, scoreDefSheet] = await Promise.all([
+          fetchSheetData('견적_발리'),
+          fetchSheetData('견적_오키나와'),
+          fetchSheetData('견적_나고야'),
+          fetchSheetData('항공'),
+          fetchSheetData('평가결과'),
+          fetchSheetData('내부평가'),
+          fetchSheetData('입찰개요'),
+          fetchSheetData('업체정보'),
+          fetchSheetData('호텔'),
+          fetchSheetData('호텔_이미지'),
+          fetchSheetData('호텔_위치'),
+          fetchSheetData('일정_발리'),
+          fetchSheetData('일정_오키나와'),
+          fetchSheetData('일정_나고야'),
+          fetchSheetData('안전사고_매뉴얼'),
+          fetchSheetData('평가점수정의'),
+        ]);
+
+        // ── 견적 데이터 ──
+        if (bali && bali.length > 1) {
+          setQuoteData(prev => ({ ...prev, '발리': { headers: bali[0], rows: bali.slice(1) } }));
+        }
+        if (oki && oki.length > 1) {
+          setQuoteData(prev => ({ ...prev, '오키나와': { headers: oki[0], rows: oki.slice(1) } }));
+        }
+        if (nagoya && nagoya.length > 1) {
+          setQuoteData(prev => ({ ...prev, '나고야': { headers: nagoya[0], rows: nagoya.slice(1) } }));
+        }
+
+        // ── 항공 데이터 (지역별 분리) ──
+        if (flight && flight.length > 1) {
+          const regions = ['발리', '오키나와', '나고야'];
+          const newFlightData = {};
+          regions.forEach(region => {
+            const regionRows = flight.filter(r => r[0] === region);
+            if (regionRows.length > 0) {
+              const headers = ['', ...flight[0].slice(2)];
+              const rows = regionRows.map(r => [r[1], ...r.slice(2)]);
+              newFlightData[region] = { headers, rows };
+            }
+          });
+          if (Object.keys(newFlightData).length > 0) {
+            setFlightData(prev => ({ ...prev, ...newFlightData }));
+          }
+        }
+
+        // ── 평가결과 (시트 → 가중치 + 점수) ──
+        if (evalSheet && evalSheet.length > 1) {
+          const criteriaMap = { '항공':'flight', '호텔':'hotel', '관광+차량':'tour', '안전사고 매뉴얼':'safety', '수수료':'fee', '내부평가':'internal' };
+          const newWeights = {};
+          const newScores = {};
+          evalSheet.slice(1).forEach(row => {
+            const cid = criteriaMap[row[0]];
+            if (!cid) return;
+            newWeights[cid] = parseInt(row[1]) || 0;
+            const agencies = ['하나투어', '레드캡', '롯데관광'];
+            agencies.forEach((a, i) => {
+              newScores[a + '_' + cid] = parseInt(row[i + 2]) || 3;
+            });
+          });
+          localStorage.setItem('ok_eval_state', JSON.stringify({ weights: newWeights, scores: newScores }));
+        }
+
+        // ── 내부평가 ──
+        if (internalSheet && internalSheet.length > 1) {
+          const evaluators = {};
+          internalSheet.slice(1).forEach(row => {
+            const name = row[0];
+            const agency = row[1];
+            if (!name || !agency) return;
+            if (!evaluators[name]) evaluators[name] = { name, scores: {} };
+            evaluators[name].scores[agency + '_proposal'] = parseInt(row[2]) || 0;
+            evaluators[name].scores[agency + '_operation'] = parseInt(row[3]) || 0;
+            evaluators[name].scores[agency + '_acceptance'] = parseInt(row[4]) || 0;
+            evaluators[name].scores[agency + '_cost'] = parseInt(row[5]) || 0;
+          });
+          setInternalEvalData(Object.values(evaluators));
+        }
+
+        // ── 안전사고 매뉴얼 제출현황 ──
+        // 시트 구조: 업체명 | 안전사고 매뉴얼 | 병원 리스트 | 메모 | 수수료 메모
+        if (safetySheet && safetySheet.length > 1) {
+          const newSafety = {};
+          safetySheet.slice(1).forEach(row => {
+            const agency = (row[0] || '').trim();
+            if (!agency) return;
+            newSafety[agency] = {
+              manual: (row[1] || '').trim() === '제출',
+              hospital: (row[2] || '').trim() === '제출',
+              memo: (row[3] || '').trim(),
+              feeMemo: (row[4] || '').trim(),
+            };
+          });
+          if (Object.keys(newSafety).length > 0) setSafetySubmission(prev => ({ ...prev, ...newSafety }));
+        }
+
+        // ── 입찰개요 ──
+        // 시트 구조: 항목 | 내용
+        if (overviewSheet && overviewSheet.length > 1) {
+          const newOverview = overviewSheet.slice(1).map(row => [row[0] || '', row[1] || '']);
+          if (newOverview.length > 0) setOverviewData(newOverview);
+        }
+
+        // ── 업체정보 ──
+        // 시트 구조: 업체명 | 필드명 | 값
+        // 필드명: sub, desc, color, company, ceo, founded, listed, revenue, assets, business,
+        //         strengths (쉼표구분), concept, team_structure (쉼표구분),
+        //         pm_name, pm_title, pm_exp, pm_dept,
+        //         member_name, member_title, member_exp, member_role (멤버별 행 반복),
+        //         track_client, track_pax, track_dest, track_year, track_amount (실적별 행 반복),
+        //         insurance, emergency, extras (쉼표구분)
+        if (agencySheet && agencySheet.length > 1) {
+          const agencyMap = {};
+          agencySheet.slice(1).forEach(row => {
+            const agencyName = (row[0] || '').trim();
+            const field = (row[1] || '').trim();
+            const value = (row[2] || '').trim();
+            if (!agencyName || !field) return;
+            if (!agencyMap[agencyName]) {
+              agencyMap[agencyName] = {
+                name: agencyName, sub: '', desc: '', color: '#3B82F6',
+                detail: {
+                  company: '', ceo: '', founded: '', listed: '',
+                  revenue: '', assets: '', business: '',
+                  strengths: [], concept: '',
+                  team: { structure: [], pm: { name: '', title: '', exp: '', dept: '' }, members: [] },
+                  track: [], insurance: '', emergency: '', extras: [],
+                }
+              };
+            }
+            const a = agencyMap[agencyName];
+            const d = a.detail;
+            switch (field) {
+              case 'sub': a.sub = value; break;
+              case 'desc': a.desc = value; break;
+              case 'color': a.color = value; break;
+              case 'company': d.company = value; break;
+              case 'ceo': d.ceo = value; break;
+              case 'founded': d.founded = value; break;
+              case 'listed': d.listed = value; break;
+              case 'revenue': d.revenue = value; break;
+              case 'assets': d.assets = value; break;
+              case 'business': d.business = value; break;
+              case 'strengths': d.strengths = value.split('|').map(s => s.trim()); break;
+              case 'concept': d.concept = value; break;
+              case 'team_structure': d.team.structure = value.split('|').map(s => s.trim()); break;
+              case 'pm_name': d.team.pm.name = value; break;
+              case 'pm_title': d.team.pm.title = value; break;
+              case 'pm_exp': d.team.pm.exp = value; break;
+              case 'pm_dept': d.team.pm.dept = value; break;
+              case 'member': {
+                const parts = value.split('|').map(s => s.trim());
+                d.team.members.push({ name: parts[0]||'', title: parts[1]||'', exp: parts[2]||'', role: parts[3]||'' });
+                break;
+              }
+              case 'track': {
+                const parts = value.split('|').map(s => s.trim());
+                d.track.push({ client: parts[0]||'', pax: parts[1]||'', dest: parts[2]||'', year: parts[3]||'', amount: parts[4]||'-' });
+                break;
+              }
+              case 'insurance': d.insurance = value; break;
+              case 'emergency': d.emergency = value; break;
+              case 'extras': d.extras = value.split('|').map(s => s.trim()); break;
+            }
+          });
+          const newCards = Object.values(agencyMap);
+          if (newCards.length > 0) setAgencyCards(newCards);
+        }
+
+        // ── 호텔 상세 ──
+        // 시트 구조: 지역 | 업체 | 호텔명 | 별점 | 상세 | 부대시설(|구분) | 가격 | 색상
+        if (hotelSheet && hotelSheet.length > 1) {
+          const newHotel = {};
+          // 새 시트 구조: 지역|업체|안|호텔명|별점|상세|부대시설|가격|합계|색상
+          // 구 시트 구조: 지역|업체|호텔명|별점|상세|부대시설|가격|색상
+          const headers = hotelSheet[0] || [];
+          const hasPlanCol = headers.length >= 3 && (headers[2] || '').trim() === '안';
+          if (!hasPlanCol) {
+            // 구 형식 시트 → 기본값(개별 호텔 분리) 유지, 시트에서 덮어쓰지 않음
+            console.log('호텔 시트 구 형식 감지 → 기본값 사용 (시트 저장하면 새 형식으로 업데이트됩니다)');
+          } else {
+          hotelSheet.slice(1).forEach(row => {
+            const region = (row[0] || '').trim();
+            const agency = (row[1] || '').trim();
+            const plan = (row[2] || '').trim();
+            const name = (row[3] || '').trim();
+            const stars = parseInt(row[4]) || 3;
+            const details = row[5] || '';
+            const amenities = (row[6] || '').split('|').map(s => s.trim()).filter(Boolean);
+            const price = row[7] || '';
+            const planTotal = row[8] || '';
+            const color = row[9] || '#3B82F6';
+            if (!region || !agency || !name) return;
+            if (!newHotel[region]) newHotel[region] = {};
+            if (!newHotel[region][agency]) newHotel[region][agency] = { agency, options: [] };
+            const opt = { name, stars, details, amenities, price, color };
+            if (plan) opt.plan = plan;
+            if (planTotal) opt.planTotal = planTotal;
+            newHotel[region][agency].options.push(opt);
+          });
+          const formatted = {};
+          Object.keys(newHotel).forEach(region => {
+            formatted[region] = Object.values(newHotel[region]);
+          });
+          if (Object.keys(formatted).length > 0) setHotelData(formatted);
+          } // hasPlanCol else 닫기
+        }
+
+        // ── 호텔 이미지 ──
+        // 시트 구조: 지역 | 업체 | 호텔명 | 이미지경로1 | 이미지경로2 | ...
+        if (hotelImgSheet && hotelImgSheet.length > 1) {
+          const newImgs = {};
+          hotelImgSheet.slice(1).forEach(row => {
+            const region = (row[0] || '').trim();
+            const agency = (row[1] || '').trim();
+            const hotel = (row[2] || '').trim();
+            if (!region || !agency || !hotel) return;
+            if (!newImgs[region]) newImgs[region] = {};
+            if (!newImgs[region][agency]) newImgs[region][agency] = {};
+            newImgs[region][agency][hotel] = row.slice(3).filter(s => s && s.trim());
+          });
+          if (Object.keys(newImgs).length > 0) {
+            Object.assign(HOTEL_IMAGES, newImgs);
+          }
+        }
+
+        // ── 호텔 위치 ──
+        // 시트 구조: 지역 | 업체 | 호텔명 | 지도링크 | 옵션(안)
+        if (hotelLocSheet && hotelLocSheet.length > 1) {
+          const newLocs = {};
+          hotelLocSheet.slice(1).forEach(row => {
+            const region = (row[0] || '').trim();
+            const agency = (row[1] || '').trim();
+            const name = (row[2] || '').trim();
+            const mapUrl = (row[3] || '').trim();
+            if (!region || !agency || !name || !mapUrl) return;
+            const coord = mapsUrlToCoord(mapUrl);
+            if (!coord) return;
+            if (!newLocs[region]) newLocs[region] = {};
+            if (!newLocs[region][agency]) newLocs[region][agency] = [];
+            newLocs[region][agency].push({
+              name,
+              lat: coord.lat,
+              lng: coord.lng,
+              option: (row[4] || '기본').trim(),
+            });
+          });
+          if (Object.keys(newLocs).length > 0) {
+            Object.assign(HOTEL_LOCATIONS, newLocs);
+          }
+        }
+
+        // ── 일정 데이터 ──
+        // 시트 구조: 업체 | Day | 제목 | 일정항목(|구분) | 좌표(이름>지도링크|이름>지도링크)
+        function parseItinerary(sheet) {
+          if (!sheet || sheet.length <= 1) return null;
+          const headers = sheet[0];
+          const hasBatch = headers.length > 1 && headers[1] && headers[1].trim() === '차수';
+          const result = {};
+          sheet.slice(1).forEach(row => {
+            const agency = (row[0] || '').trim();
+            if (!agency) return;
+            if (!result[agency]) result[agency] = { days: [] };
+            let batch, dayStr, title, itemsStr, coordsStr;
+            if (hasBatch) {
+              batch = (row[1] || '').trim();
+              dayStr = (row[2] || '').trim();
+              title = (row[3] || '').trim();
+              itemsStr = row[4] || '';
+              coordsStr = (row[5] || '').trim();
+            } else {
+              batch = '';
+              dayStr = (row[1] || '').trim();
+              title = (row[2] || '').trim();
+              itemsStr = row[3] || '';
+              coordsStr = (row[4] || '').trim();
+            }
+            const items = itemsStr.split('|').map(s => s.trim()).filter(Boolean);
+            const coords = coordsStr ? coordsStr.split('|').map(entry => {
+              const sep = entry.indexOf('>');
+              if (sep === -1) {
+                const parts = entry.trim().split(':');
+                return { name: parts[0] || '', lat: parseFloat(parts[1]) || 0, lng: parseFloat(parts[2]) || 0 };
+              }
+              const name = entry.substring(0, sep).trim();
+              const url = entry.substring(sep + 1).trim();
+              const coord = mapsUrlToCoord(url);
+              return coord ? { name, lat: coord.lat, lng: coord.lng } : null;
+            }).filter(c => c && c.name) : [];
+            result[agency].days.push({
+              day: dayStr,
+              title,
+              items,
+              coords,
+              batch,
+            });
+          });
+          return Object.keys(result).length > 0 ? result : null;
+        }
+
+        const parsedItiBali = parseItinerary(itiBali);
+        const parsedItiOki = parseItinerary(itiOki);
+        const parsedItiNagoya = parseItinerary(itiNagoya);
+        if (parsedItiBali || parsedItiOki || parsedItiNagoya) {
+          setItineraryData(prev => ({
+            ...prev,
+            ...(parsedItiBali ? { '발리': parsedItiBali } : {}),
+            ...(parsedItiOki ? { '오키나와': parsedItiOki } : {}),
+            ...(parsedItiNagoya ? { '나고야': parsedItiNagoya } : {}),
+          }));
+        }
+
+        // ── 평가 점수 정의 ──
+        if (scoreDefSheet && scoreDefSheet.length > 1) {
+          setScoreDefData(scoreDefSheet);
+        }
+
+        setSheetLoaded(true);
+        console.log('Google Sheets 데이터 로딩 완료');
+      } catch(e) {
+        console.log('Google Sheets 로딩 실패, 기본값 사용:', e);
+      }
+    }
+    loadFromSheets();
+  }, []);
+
+  return (
+    <EditContext.Provider value={{ isEditMode }}>
+      <div className={`flex min-h-screen ${isEditMode ? 'edit-mode' : ''}`}>
+        {/* Edit Toolbar */}
+        {isEditMode && (
+          <div className="edit-toolbar">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+              <span className="font-bold text-sm">편집 모드</span>
+            </div>
+            <div className="flex-1"></div>
+            <button onClick={handleSaveToSheets} className="bg-green-500 hover:bg-green-600 text-white border border-green-400/50 font-bold">
+              {sheetSaveStatus || '📊 시트 저장'}
+            </button>
+            <button onClick={() => setIsEditMode(false)} className="bg-red-500/80 hover:bg-red-600 text-white border border-red-400/50">편집 종료</button>
+          </div>
+        )}
+
+        {/* Password Modal */}
+        {showPwModal && <PasswordModal onSuccess={handlePwSuccess} onClose={() => setShowPwModal(false)} />}
+
+        {/* Top Navigation */}
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-ok-dark text-white shadow-xl">
+          <div className="flex items-center h-14 px-6">
+            <div className="flex items-center gap-3 mr-8">
+              <div className="text-ok-orange font-bold text-lg">OK금융그룹</div>
+              <div className="text-xs text-gray-400 hidden lg:block">2026 해외연수 업체 평가</div>
+            </div>
+            <div className="flex items-center gap-1 flex-1 overflow-x-auto">
+              {SECTIONS.map(s => (
+                <button key={s.id} onClick={() => scrollTo(s.id)}
+                  className={`topnav-link px-3 py-1.5 text-sm rounded-lg flex items-center gap-1.5 whitespace-nowrap transition ${activeSection===s.id ? 'bg-ok-orange text-white' : 'hover:bg-gray-700 text-gray-300'}`}>
+                  <span className="text-xs">{s.icon}</span>
+                  <span>{s.label}</span>
+                </button>
+              ))}
+              <a href="https://ok-hrd-nagoya.lovable.app/" target="_blank" rel="noopener noreferrer"
+                className="topnav-link px-3 py-1.5 text-sm rounded-lg flex items-center gap-1.5 whitespace-nowrap bg-yellow-500 text-gray-900 hover:bg-yellow-400 font-bold ml-1">
+                <span className="text-xs">🏅</span>
+                <span>Aichi-Nagoya 2026</span>
+              </a>
+            </div>
+            <button onClick={() => exportPDF()}
+              className="ml-2 px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 bg-red-600 text-white hover:bg-red-700 transition">
+              <span>📄</span>
+              <span className="hidden md:inline">PDF</span>
+            </button>
+            <button onClick={handleLockClick}
+              className={`ml-1 px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 transition ${isEditMode ? 'bg-ok-orange text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}`}>
+              <span>{isEditMode ? '🔓' : '🔒'}</span>
+              <span className="hidden md:inline">{isEditMode ? '편집 ON' : '잠금'}</span>
+            </button>
+          </div>
+        </nav>
+
+        {/* Main Content */}
+        <main className={`flex-1 p-8 max-w-full ${isEditMode ? 'pt-28' : 'pt-20'}`}>
+          {/* Header */}
+          <div className="mb-8 bg-gradient-to-r from-ok-orange to-ok-mid rounded-xl p-8 text-white shadow-lg relative overflow-hidden">
+            <div className="relative z-10">
+              <h1 className="text-3xl font-bold">2026년 OK금융그룹 해외연수 프로그램</h1>
+              <p className="mt-2 text-white/80 text-lg">운영 업체 선정 입찰 평가 보고서</p>
+            </div>
+            <div className="absolute right-6 -bottom-2 z-20" style={{width:'180px'}}>
+              <div className="relative">
+                <div className="sparkle" style={{top:'-10px',left:'20px'}}></div>
+                <div className="sparkle" style={{top:'5px',right:'10px'}}></div>
+                <div className="sparkle" style={{top:'-5px',left:'60px'}}></div>
+                <div className="sparkle" style={{top:'15px',right:'40px'}}></div>
+                <img src="mascot.png" alt="읏맨" className="mascot-float" style={{width:'160px',height:'auto'}} />
+              </div>
+            </div>
+            <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full"></div>
+            <div className="absolute right-20 -bottom-16 w-52 h-52 bg-white/5 rounded-full"></div>
+          </div>
+
+          <OverviewSection overviewData={overviewData} setOverviewData={setOverviewData} agencyCards={agencyCards} setAgencyCards={setAgencyCards} />
+          <EvaluationSection internalScores={internalScores} safetySubmission={safetySubmission} scoreDefData={scoreDefData} />
+          <QuoteSection quoteData={quoteData} setQuoteData={setQuoteData} />
+          <FlightSection flightData={flightData} setFlightData={setFlightData} />
+          <HotelSection hotelData={hotelData} setHotelData={setHotelData} />
+          <TourSection itineraryData={itineraryData} setItineraryData={setItineraryData} />
+          <EtcSection onInternalScoresChange={setInternalScores} internalEvalData={internalEvalData} quoteData={quoteData} safetySubmission={safetySubmission} setSafetySubmission={setSafetySubmission} />
+        </main>
+      </div>
+    </EditContext.Provider>
+  );
+}
+
+// ============ OVERVIEW ============
+function OverviewSection({ overviewData, setOverviewData, agencyCards, setAgencyCards }) {
+  const { isEditMode } = useEditMode();
+  const [expandedCard, setExpandedCard] = useState(null);
+
+  const updateOverviewField = (idx, val) => {
+    setOverviewData(prev => {
+      const copy = prev.map(r => [...r]);
+      copy[idx][1] = val;
+      return copy;
+    });
+  };
+
+  const updateAgencyCard = (idx, field, val) => {
+    setAgencyCards(prev => {
+      const copy = prev.map(c => ({...c}));
+      copy[idx][field] = val;
+      return copy;
+    });
+  };
+
+  return (
+    <section id="overview" className="mb-16 scroll-mt-20">
+      <SectionTitle>입찰 개요</SectionTitle>
+      <div className="bg-white rounded-xl shadow p-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {overviewData.map(([k,v], idx) => (
+            <div key={k} className="flex gap-3 p-3 bg-gray-50 rounded-lg">
+              <span className="font-bold text-ok-orange whitespace-nowrap min-w-[80px]">{k}</span>
+              <EditableCell value={v} onSave={(val) => updateOverviewField(idx, val)} className="text-sm whitespace-pre-line" multiline={v.includes('\n')} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {agencyCards.map((a, idx) => (
+          <div key={a.name} className={`bg-white rounded-xl shadow border-t-4 transition-all duration-300 cursor-pointer ${expandedCard === idx ? 'shadow-xl ring-2' : 'hover:shadow-lg'}`}
+            style={{borderTopColor: a.color, ringColor: expandedCard === idx ? a.color : 'transparent'}}
+            onClick={() => setExpandedCard(expandedCard === idx ? null : idx)}>
+            <div className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-bold" style={{color:a.color}}>{a.name}</h3>
+                  <p className="text-xs text-gray-400 mt-1">{a.sub}</p>
+                </div>
+                <span className={`text-gray-300 text-xl transition-transform duration-300 ${expandedCard === idx ? 'rotate-180' : ''}`}>&#9660;</span>
+              </div>
+              <EditableCell value={a.desc} onSave={(val) => updateAgencyCard(idx, 'desc', val)} tag="p" className="text-sm text-gray-600 mt-3" multiline />
+            </div>
+
+            {/* 펼쳐지는 상세 카드 */}
+            {expandedCard === idx && a.detail && (
+              <div className="border-t px-6 pb-6 pt-4" style={{backgroundColor: a.color + '08'}} onClick={e => e.stopPropagation()}>
+                {/* 기업 정보 */}
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 mb-4 text-xs">
+                  {[
+                    ['회사명', a.detail.company], ['대표', a.detail.ceo],
+                    ['설립', a.detail.founded], ['상장', a.detail.listed],
+                    ['매출', a.detail.revenue], ['자산', a.detail.assets],
+                    ['사업영역', a.detail.business], ['보험', a.detail.insurance],
+                  ].filter(([k,v]) => v && v !== '-').map(([k,v]) => (
+                    <div key={k} className="py-0.5">
+                      <span className="text-gray-400">{k}</span>
+                      <span className="ml-1 text-gray-700 font-bold">{v}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* 컨셉 */}
+                <div className="mb-3 p-2.5 rounded-lg" style={{backgroundColor: a.color + '15'}}>
+                  <div className="text-xs text-gray-500 mb-0.5">제안 컨셉</div>
+                  <div className="text-sm font-bold" style={{color: a.color}}>{a.detail.concept}</div>
+                </div>
+
+                {/* 강점 */}
+                <div className="mb-3">
+                  <div className="text-xs font-bold text-gray-500 mb-1">핵심 강점</div>
+                  <div className="flex flex-wrap gap-1">
+                    {a.detail.strengths.map((s, si) => (
+                      <span key={si} className="text-xs px-2 py-0.5 rounded-full text-white" style={{backgroundColor: a.color}}>{s}</span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 참여 인력 구성 */}
+                <div className="mb-3">
+                  <div className="text-xs font-bold text-gray-500 mb-1">참여 인력 구성</div>
+                  <div className="bg-white rounded-lg p-3 border">
+                    <div className="flex items-center gap-2 mb-2 pb-2 border-b">
+                      <span className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{backgroundColor: a.color}}>PM</span>
+                      <div>
+                        <span className="text-xs font-bold text-gray-800">{a.detail.team.pm.name}</span>
+                        <span className="text-xs text-gray-400 ml-1">{a.detail.team.pm.title}</span>
+                        {a.detail.team.pm.exp !== '-' && <span className="text-xs text-gray-400 ml-1">({a.detail.team.pm.exp})</span>}
+                        <div className="text-xs text-gray-500">{a.detail.team.pm.dept}</div>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-1">
+                      {a.detail.team.members.map((m, mi) => (
+                        <div key={mi} className="text-xs py-0.5 flex items-start gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full mt-1 flex-shrink-0" style={{backgroundColor: a.color}}></span>
+                          <div>
+                            <span className="font-bold">{m.name}</span>
+                            <span className="text-gray-400 ml-1">{m.title}</span>
+                            <div className="text-gray-500">{m.role}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex flex-wrap gap-1 mt-2 pt-2 border-t">
+                      {a.detail.team.structure.map((s, si) => (
+                        <span key={si} className="text-xs px-1.5 py-0.5 bg-gray-100 text-gray-500 rounded">{s}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* 주요 수행 실적 */}
+                <div className="mb-3">
+                  <div className="text-xs font-bold text-gray-500 mb-1">주요 수행 실적</div>
+                  <div className="bg-white rounded-lg border overflow-hidden">
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="bg-gray-50 text-gray-500">
+                          <th className="px-2 py-1 text-left">고객사</th>
+                          <th className="px-2 py-1 text-right">인원</th>
+                          <th className="px-2 py-1 text-left">행선지</th>
+                          <th className="px-2 py-1 text-center">연도</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {a.detail.track.map((t, ti) => (
+                          <tr key={ti} className="border-t">
+                            <td className="px-2 py-1 font-bold">{t.client}</td>
+                            <td className="px-2 py-1 text-right" style={{color: a.color}}>{typeof t.pax === 'number' ? t.pax.toLocaleString() + '명' : t.pax}</td>
+                            <td className="px-2 py-1 text-gray-600">{t.dest}</td>
+                            <td className="px-2 py-1 text-center text-gray-400">{t.year}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* 비상대응 & 기타 */}
+                <div className="grid grid-cols-1 gap-2">
+                  <div className="text-xs">
+                    <span className="font-bold text-gray-500">비상대응: </span>
+                    <span className="text-gray-600">{a.detail.emergency}</span>
+                  </div>
+                  {a.detail.extras && a.detail.extras.length > 0 && (
+                    <div className="text-xs">
+                      <span className="font-bold text-gray-500">기타 제공: </span>
+                      <span className="text-gray-600">{a.detail.extras.join(' / ')}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ============ EVALUATION ============
+function EvaluationSection({ internalScores, safetySubmission, scoreDefData }) {
+  const { isEditMode } = useEditMode();
+  const [showScoreDef, setShowScoreDef] = useState(false);
+  const loadState = () => {
+    try {
+      const s = localStorage.getItem('ok_eval_state');
+      if (s) return JSON.parse(s);
+    } catch(e) {}
+    return null;
+  };
+  const defaultWeights = Object.fromEntries(CRITERIA.map(c => [c.id, c.defaultWeight]));
+  const defaultScores = {};
+  AGENCIES.forEach(a => { CRITERIA.forEach(c => { defaultScores[`${a}_${c.id}`] = 3; }); });
+
+  const saved = loadState();
+  const [weights, setWeights] = useState(saved?.weights || defaultWeights);
+  const [scores, setScores] = useState(saved?.scores || defaultScores);
+  const chartRef = useRef(null);
+  const chartInstance = useRef(null);
+
+  // 시트 로딩 후 localStorage 변경 감지 → state 갱신
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const current = loadState();
+      if (current) {
+        const currentStr = JSON.stringify(current.scores);
+        const stateStr = JSON.stringify(scores);
+        if (currentStr !== stateStr) {
+          setWeights(current.weights || defaultWeights);
+          setScores(current.scores || defaultScores);
+        }
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [scores]);
+
+  useEffect(() => {
+    localStorage.setItem('ok_eval_state', JSON.stringify({ weights, scores }));
+  }, [weights, scores]);
+
+  const handleWeightChange = (id, val) => {
+    const newVal = Math.min(100, Math.max(0, parseInt(val) || 0));
+    setWeights(prev => ({ ...prev, [id]: newVal }));
+  };
+
+  const totalWeight = Object.values(weights).reduce((a,b) => a+b, 0);
+
+  // 내부평가 점수 자동 반영 (internalScores가 있으면)
+  useEffect(() => {
+    if (!internalScores) return;
+    const hasScores = Object.values(internalScores).some(v => v > 0);
+    if (hasScores) {
+      setScores(prev => {
+        const copy = { ...prev };
+        AGENCIES.forEach(a => {
+          // 내부평가 평균(0~5) → 반올림해서 1~5 정수로
+          const rounded = Math.max(1, Math.min(5, Math.round(internalScores[a] || 0)));
+          copy[`${a}_internal`] = rounded;
+        });
+        return copy;
+      });
+    }
+  }, [internalScores]);
+
+  // 안전사고 매뉴얼 점수 자동 반영 (매뉴얼 7.5 + 병원리스트 2.5 = 10점 만점 → 5점 스케일)
+  useEffect(() => {
+    if (!safetySubmission) return;
+    setScores(prev => {
+      const copy = { ...prev };
+      AGENCIES.forEach(a => {
+        const sub = safetySubmission[a] || {};
+        const rawScore = (sub.manual ? 7.5 : 0) + (sub.hospital ? 2.5 : 0); // 0~10
+        const scaled = Math.round(rawScore / 10 * 5); // 0~5
+        copy[`${a}_safety`] = Math.max(0, Math.min(5, scaled));
+      });
+      return copy;
+    });
+  }, [safetySubmission]);
+
+  const computeTotal = (agency) => {
+    let sum = 0;
+    CRITERIA.forEach(c => {
+      sum += (scores[`${agency}_${c.id}`] || 0) * (weights[c.id] || 0) / 100;
+    });
+    return Math.round(sum * 100) / 100;
+  };
+
+  const totals = AGENCIES.map(a => ({ agency:a, total:computeTotal(a) }));
+  totals.sort((a,b) => b.total - a.total);
+  const ranks = {};
+  totals.forEach((t,i) => { ranks[t.agency] = i+1; });
+  const winner = totals[0];
+
+  // Chart
+  useEffect(() => {
+    const canvas = chartRef.current;
+    if (!canvas) return;
+    if (chartInstance.current) chartInstance.current.destroy();
+    const labels = CRITERIA.map(c => c.label);
+    const datasets = AGENCIES.map(a => ({
+      label: a,
+      data: CRITERIA.map(c => scores[`${a}_${c.id}`] || 0),
+      borderColor: AGENCY_COLORS[a],
+      backgroundColor: AGENCY_COLORS[a] + '33',
+      pointBackgroundColor: AGENCY_COLORS[a],
+      borderWidth: 2,
+      pointRadius: 4,
+    }));
+    chartInstance.current = new Chart(canvas, {
+      type: 'radar',
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+          r: { min:0, max:5, ticks:{ stepSize:1 }, pointLabels:{ font:{ size:12 } } }
+        },
+        plugins: { legend: { position:'bottom' } }
+      }
+    });
+  }, [scores]);
+
+  return (
+    <section id="evaluation" className="mb-16 scroll-mt-20">
+      <div className="flex items-end gap-4 mb-6 pb-2 border-b-2 border-ok-orange">
+        <h2 className="text-2xl font-bold text-ok-dark">평가 결과</h2>
+        <button onClick={() => setShowScoreDef(true)}
+          className="px-4 py-1.5 mb-0.5 bg-white border-2 border-ok-orange text-ok-orange rounded-lg text-sm font-bold hover:bg-ok-orange hover:text-white transition flex items-center gap-1.5">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+          평가 점수별 정의
+        </button>
+      </div>
+
+      {/* Score Definition Modal */}
+      {showScoreDef && (
+        <div className="modal-overlay" onClick={() => setShowScoreDef(false)}>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[85vh] overflow-auto" onClick={e => e.stopPropagation()}>
+            {(() => {
+              // 시트에서 제목/설명/테이블 데이터 분리
+              let modalTitle = '평가 점수별 정의';
+              let modalDesc = '';
+              let tableData = scoreDefData || [];
+              if (tableData.length > 0 && tableData[0][0] === '[제목]') {
+                modalTitle = tableData[0][1] || modalTitle;
+                tableData = tableData.slice(1);
+              }
+              if (tableData.length > 0 && tableData[0][0] === '[설명]') {
+                modalDesc = tableData[0][1] || '';
+                tableData = tableData.slice(1);
+              }
+              const headers = tableData[0] || [];
+              const rows = tableData.slice(1);
+              return (
+                <React.Fragment>
+                  <div className="sticky top-0 bg-gradient-to-r from-ok-orange to-ok-mid text-white px-6 py-4 rounded-t-2xl flex items-center justify-between z-10">
+                    <div>
+                      <h2 className="text-xl font-bold">{modalTitle}</h2>
+                      {modalDesc && <p className="text-sm opacity-80 mt-0.5">{modalDesc}</p>}
+                    </div>
+                    <button onClick={() => setShowScoreDef(false)} className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white text-lg font-bold transition">&times;</button>
+                  </div>
+                  <div className="p-6">
+                    {rows.length > 0 ? (
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm border-collapse">
+                          <thead>
+                            <tr>
+                              {headers.map((h, i) => (
+                                <th key={i} className={`p-3 text-left text-white font-bold ${i === 0 ? 'w-28 rounded-tl-lg' : i === 1 ? 'w-16 text-center' : ''} ${i === headers.length - 1 ? 'rounded-tr-lg' : ''}`}
+                                  style={{ backgroundColor: i <= 1 ? '#F26522' : i === 2 ? '#22C55E' : i === 3 ? '#60A5FA' : i === 4 ? '#FBBF24' : i === 5 ? '#F97316' : '#EF4444' }}>
+                                  {h}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {rows.map((row, ri) => (
+                              <tr key={ri} className={`border-b ${ri % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
+                                {row.map((cell, ci) => (
+                                  <td key={ci} className={`p-3 ${ci === 0 ? 'font-bold text-ok-dark whitespace-pre-line' : ci === 1 ? 'text-center font-bold text-ok-orange' : 'text-gray-600 text-xs leading-relaxed'}`}>
+                                    {ci === 0 ? cell : (cell || '').replace(/[\r\n]+/g, ' ')}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    ) : (
+                      <div className="text-center py-10 text-gray-400">데이터를 불러오는 중...</div>
+                    )}
+                  </div>
+                </React.Fragment>
+              );
+            })()}
+          </div>
+        </div>
+      )}
+
+      {/* Winner */}
+      <div className="bg-gradient-to-r from-ok-orange to-ok-mid text-white rounded-xl p-6 mb-6 flex items-center gap-6 shadow-lg">
+        <div className="winner-badge bg-white text-ok-orange w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold shadow-lg">1</div>
+        <div>
+          <div className="text-sm opacity-80">현재 종합 1위</div>
+          <div className="text-3xl font-bold">{winner.agency}</div>
+          <div className="text-lg mt-1">종합점수: {winner.total.toFixed(2)}점</div>
+        </div>
+      </div>
+
+      {/* Weight warning */}
+      {totalWeight !== 100 && (
+        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg p-3 mb-4 text-sm">
+          가중치 합계가 {totalWeight}%입니다. 100%가 되어야 정확한 평가가 가능합니다.
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        {/* Weight + Score Table */}
+        <div className="xl:col-span-2 bg-white rounded-xl shadow p-6">
+          <h3 className="font-bold mb-4 text-lg">항목별 가중치 및 점수</h3>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className="p-3 text-left">평가항목</th>
+                  <th className="p-3 text-center w-40">가중치 (%)</th>
+                  {AGENCIES.map(a => <th key={a} className="p-3 text-center" style={{color:AGENCY_COLORS[a]}}>{a}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {CRITERIA.map(c => (
+                  <tr key={c.id} className="border-t">
+                    <td className="p-3 font-medium">{c.label}</td>
+                    <td className="p-3">
+                      <div className="flex items-center gap-2">
+                        <input type="range" min="0" max="100" value={weights[c.id]}
+                          onChange={e => handleWeightChange(c.id, e.target.value)}
+                          disabled={!isEditMode}
+                          className="flex-1 accent-ok-orange" />
+                        <input type="number" min="0" max="100" value={weights[c.id]}
+                          onChange={e => handleWeightChange(c.id, e.target.value)}
+                          disabled={!isEditMode}
+                          className="w-14 text-center border rounded p-1 text-sm disabled:bg-gray-50" />
+                      </div>
+                    </td>
+                    {AGENCIES.map(a => {
+                      const isInternalAuto = c.id === 'internal' && internalScores && Object.values(internalScores).some(v => v > 0);
+                      const isSafetyAuto = c.id === 'safety' && safetySubmission;
+                      const safetyRaw = isSafetyAuto ? ((safetySubmission[a]?.manual ? 7.5 : 0) + (safetySubmission[a]?.hospital ? 2.5 : 0)) : 0;
+                      return (
+                      <td key={a} className="p-3 text-center">
+                        {isInternalAuto ? (
+                          <div className="text-center">
+                            <div className="flex justify-center gap-1">
+                              {[1,2,3,4,5].map(v => (
+                                <span key={v}
+                                  className={`w-8 h-8 rounded-full text-xs font-bold flex items-center justify-center ${scores[`${a}_${c.id}`]===v ? 'text-white shadow' : 'bg-gray-100 text-gray-300'}`}
+                                  style={scores[`${a}_${c.id}`]===v ? {backgroundColor:AGENCY_COLORS[a]} : {}}>
+                                  {v}
+                                </span>
+                              ))}
+                            </div>
+                            <div className="text-xs text-ok-orange mt-1">자동 (평균 {(internalScores[a] || 0).toFixed(2)})</div>
+                          </div>
+                        ) : isSafetyAuto ? (
+                          <div className="text-center">
+                            <div className="flex justify-center gap-1">
+                              {[0,1,2,3,4,5].map(v => (
+                                <span key={v}
+                                  className={`w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center ${scores[`${a}_${c.id}`]===v ? 'text-white shadow' : 'bg-gray-100 text-gray-300'}`}
+                                  style={scores[`${a}_${c.id}`]===v ? {backgroundColor:AGENCY_COLORS[a]} : {}}>
+                                  {v}
+                                </span>
+                              ))}
+                            </div>
+                            <div className="text-xs text-ok-orange mt-1">자동 ({safetyRaw}/10점)</div>
+                          </div>
+                        ) : (
+                          <div className="flex justify-center gap-1">
+                            {[1,2,3,4,5].map(v => (
+                              <button key={v}
+                                onClick={() => isEditMode && setScores(p => ({...p, [`${a}_${c.id}`]:v}))}
+                                disabled={!isEditMode}
+                                className={`w-8 h-8 rounded-full text-xs font-bold transition ${scores[`${a}_${c.id}`]===v ? 'text-white shadow' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'} ${!isEditMode ? 'cursor-default' : ''}`}
+                                style={scores[`${a}_${c.id}`]===v ? {backgroundColor:AGENCY_COLORS[a]} : {}}>
+                                {v}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="border-t-2 border-ok-orange bg-ok-light font-bold">
+                  <td className="p-3">종합점수</td>
+                  <td className="p-3 text-center">{totalWeight}%</td>
+                  {AGENCIES.map(a => (
+                    <td key={a} className="p-3 text-center text-lg" style={{color:AGENCY_COLORS[a]}}>
+                      {computeTotal(a).toFixed(2)}
+                      <span className="block text-xs text-gray-400">({ranks[a]}위)</span>
+                    </td>
+                  ))}
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        {/* Radar Chart */}
+        <div className="bg-white rounded-xl shadow p-6">
+          <h3 className="font-bold mb-4 text-lg">레이더 차트</h3>
+          <canvas ref={chartRef} />
+          <div className="mt-4">
+            <h4 className="font-bold text-sm mb-2">순위</h4>
+            {totals.map((t,i) => (
+              <div key={t.agency} className="flex items-center gap-3 py-2 border-b last:border-0">
+                <span className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold ${i===0?'bg-yellow-500':i===1?'bg-gray-400':'bg-amber-700'}`}>{i+1}</span>
+                <span className="font-medium" style={{color:AGENCY_COLORS[t.agency]}}>{t.agency}</span>
+                <span className="ml-auto font-bold">{t.total.toFixed(2)}점</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============ QUOTE COMPARISON ============
+function QuoteSection({ quoteData, setQuoteData }) {
+  const { isEditMode } = useEditMode();
+  const [tab, setTab] = useState('발리');
+  const data = quoteData[tab];
+
+  const getNumericValue = (v) => {
+    if (!v || v==='-') return Infinity;
+    const n = parseFloat(v.replace(/[,%원]/g,''));
+    return isNaN(n) ? Infinity : n;
+  };
+
+  const getRowMin = (row) => {
+    const vals = row.slice(1).map(v => getNumericValue(v));
+    const min = Math.min(...vals);
+    return min === Infinity ? null : min;
+  };
+
+  const updateCell = (ri, ci, val) => {
+    setQuoteData(prev => {
+      const copy = JSON.parse(JSON.stringify(prev));
+      copy[tab].rows[ri][ci] = val;
+      return copy;
+    });
+  };
+
+  return (
+    <section id="quote" className="mb-16 scroll-mt-20">
+      <SectionTitle>견적 비교</SectionTitle>
+      <TabBar tabs={REGIONS} active={tab} onChange={setTab} />
+      <div className="bg-white rounded-xl shadow p-6 overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-ok-dark text-white">
+              {data.headers.map((h,i) => <th key={i} className="p-3 text-center whitespace-nowrap">{h}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {data.rows.map((row, ri) => {
+              const minVal = getRowMin(row);
+              return (
+                <tr key={ri} className={`border-b ${ri===0 ? 'bg-ok-light font-bold' : 'hover:bg-gray-50'}`}>
+                  {row.map((cell, ci) => {
+                    const isLowest = ci > 0 && minVal !== null && getNumericValue(cell) === minVal && cell !== '-';
+                    if (isEditMode && ci > 0) {
+                      return (
+                        <td key={ci} className={`p-2 text-center whitespace-nowrap ${isLowest?'lowest-price':''}`}>
+                          <EditableCell value={cell} onSave={(val) => updateCell(ri, ci, val)}
+                            className={`inline-block px-1 ${isLowest?'':'text-gray-700'}`} />
+                        </td>
+                      );
+                    }
+                    return (
+                      <td key={ci} className={`p-3 text-center whitespace-nowrap ${ci===0?'font-medium text-left bg-gray-50':''} ${isLowest?'lowest-price':''}`}>
+                        {ci > 0 && ri < 7 && cell !== '-' && !cell.includes('%') ? cell + '원' : cell}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <p className="text-xs text-gray-400 mt-3">* 녹색 셀은 해당 행에서 최저가를 나타냅니다.</p>
+      </div>
+    </section>
+  );
+}
+
+// ============ FLIGHT COMPARISON ============
+const FLIGHT_ROUTES = {
+  '발리': { origin: 'ICN', dest: 'DPS', dates: ['2026-09-10','2026-09-17'] },
+  '오키나와': { origin: 'ICN', dest: 'OKA', dates: ['2026-06-12','2026-06-26','2026-10-16'] },
+  '나고야': { origin: 'ICN', dest: 'NGO', dates: ['2026-09-26','2026-09-30'] },
+};
+
+function FlightSection({ flightData, setFlightData }) {
+  const { isEditMode } = useEditMode();
+  const [tab, setTab] = useState('발리');
+  const data = flightData[tab];
+
+  const fetchLiveFlights = async () => {
+    if (window.location.protocol === 'file:') {
+      alert('실시간 조회는 배포된 사이트에서만 가능합니다.');
+      return;
+    }
+    setLoadingFlights(true);
+    const route = FLIGHT_ROUTES[tab];
+    try {
+      const results = [];
+      for (const date of route.dates) {
+        const res = await fetch(`/api/flight-prices?origin=${route.origin}&destination=${route.dest}&date=${date}&adults=1`);
+        const data = await res.json();
+        if (data.flights) results.push({ date, flights: data.flights.slice(0, 3) });
+      }
+      setLiveFlights(results);
+    } catch (err) {
+      alert('조회 실패: ' + err.message);
+    }
+    setLoadingFlights(false);
+  };
+
+  const updateCell = (ri, ci, val) => {
+    setFlightData(prev => {
+      const copy = JSON.parse(JSON.stringify(prev));
+      copy[tab].rows[ri][ci] = val;
+      return copy;
+    });
+  };
+
+  return (
+    <section id="flight" className="mb-16 scroll-mt-20">
+      <SectionTitle>항공 비교</SectionTitle>
+      <TabBar tabs={REGIONS} active={tab} onChange={setTab} />
+      <div className="bg-white rounded-xl shadow p-6 overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-ok-dark text-white">
+              {data.headers.map((h,i) => <th key={i} className="p-3 text-center">{h}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {data.rows.map((row,ri) => (
+              <tr key={ri} className="border-b hover:bg-gray-50">
+                {row.map((cell,ci) => {
+                  if (isEditMode) {
+                    return (
+                      <td key={ci} className={`p-2 text-center ${ci===0?'font-medium text-left bg-gray-50':''} ${ri===data.rows.length-1?'font-bold text-ok-orange':''}`}>
+                        <EditableCell value={cell} onSave={(val) => updateCell(ri, ci, val)}
+                          className={ci===0 ? 'font-medium' : ''} />
+                      </td>
+                    );
+                  }
+                  return (
+                    <td key={ci} className={`p-3 text-center ${ci===0?'font-medium text-left bg-gray-50':''} ${ri===data.rows.length-1?'font-bold text-ok-orange':''}`}>
+                      {cell}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* 스카이스캐너 항공권 가격 조회 */}
+      <div className="mt-4 bg-white rounded-xl shadow p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-bold text-lg flex items-center gap-2">
+            <span className="w-2 h-6 bg-ok-orange rounded"></span>
+            항공권 시세 확인
+          </h3>
+        </div>
+        <p className="text-xs text-gray-400 mb-4">Google Flights에서 해당 노선의 실시간 항공권 가격을 직접 조회할 수 있습니다.</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {FLIGHT_ROUTES[tab].dates.map((date, di) => {
+            const route = FLIGHT_ROUTES[tab];
+            const destMap = { 'DPS': '/m/0h3tv', 'OKA': '/m/0132sq', 'NGO': '/m/0ftjx' };
+            const googleFlightsUrl = `https://www.google.com/travel/flights?q=flights+from+ICN+to+${route.dest}+on+${date}&curr=KRW&hl=ko`;
+            return (
+              <a key={di} href={googleFlightsUrl} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-3 p-4 border-2 border-blue-100 rounded-xl hover:border-blue-400 hover:shadow-lg transition group">
+                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white text-lg group-hover:bg-blue-600 transition">✈</div>
+                <div className="flex-1">
+                  <div className="text-sm font-bold text-gray-800">{route.origin} → {route.dest}</div>
+                  <div className="text-xs text-gray-500">{date}</div>
+                </div>
+                <div className="text-blue-500 text-xs font-bold group-hover:text-blue-700">조회 →</div>
+              </a>
+            );
+          })}
+        </div>
+        <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+          <div className="text-xs text-gray-500 font-bold mb-1">업체 제안가 참고</div>
+          <div className="flex gap-4">
+            {AGENCIES.map(a => {
+              const prices = { '발리': { '하나투어': 989000, '레드캡': 970000, '롯데관광': 1069000 }, '오키나와': { '하나투어': 420000, '레드캡': 400000, '롯데관광': 394000 }, '나고야': { '하나투어': 555000, '레드캡': 730000, '롯데관광': 510300 } };
+              return (
+                <div key={a} className="text-xs">
+                  <span style={{color: AGENCY_COLORS[a]}} className="font-bold">{a}</span>
+                  <span className="ml-1 text-gray-700">₩{(prices[tab]?.[a] || 0).toLocaleString()}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============ HOTEL MAP ============
+function HotelMap({ region }) {
+  const mapRef = useRef(null);
+  const mapInstance = useRef(null);
+  const markersRef = useRef([]);
+  const [visibleAgencies, setVisibleAgencies] = useState({ '하나투어': true, '레드캡': true, '롯데관광': true });
+
+  useEffect(() => {
+    if (!window.google || !window.google.maps || !mapRef.current) return;
+    const center = HOTEL_MAP_CENTERS[region];
+
+    // 지도 초기화 또는 재중심
+    if (!mapInstance.current) {
+      mapInstance.current = new google.maps.Map(mapRef.current, {
+        center: { lat: center.lat, lng: center.lng },
+        zoom: center.zoom,
+        styles: [{ featureType: 'poi.business', stylers: [{ visibility: 'off' }] }],
+      });
+    } else {
+      mapInstance.current.setCenter({ lat: center.lat, lng: center.lng });
+      mapInstance.current.setZoom(center.zoom);
+    }
+
+    // 기존 마커 제거
+    markersRef.current.forEach(m => m.setMap(null));
+    markersRef.current = [];
+
+    const locations = HOTEL_LOCATIONS[region] || {};
+    const iconShapes = { '하나투어': '●', '레드캡': '◆', '롯데관광': '■' };
+
+    AGENCIES.forEach(agency => {
+      if (!visibleAgencies[agency]) return;
+      const hotels = locations[agency] || [];
+      const color = AGENCY_COLORS[agency];
+
+      hotels.forEach((h, idx) => {
+        const marker = new google.maps.Marker({
+          position: { lat: h.lat, lng: h.lng },
+          map: mapInstance.current,
+          label: { text: String(idx + 1), color: 'white', fontWeight: 'bold', fontSize: '11px' },
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: color,
+            fillOpacity: 1,
+            strokeColor: '#fff',
+            strokeWeight: 2,
+            scale: 14,
+          },
+          title: `${agency} - ${h.name}`,
+        });
+        const infoWindow = new google.maps.InfoWindow({
+          content: `<div style="font-size:13px;font-family:'오케이체',sans-serif;">
+            <b style="color:${color}">${agency}</b> [${h.option}]<br/>
+            <b>${h.name}</b>
+          </div>`
+        });
+        marker.addListener('click', () => infoWindow.open(mapInstance.current, marker));
+        markersRef.current.push(marker);
+      });
+    });
+  }, [region, visibleAgencies]);
+
+  return (
+    <div className="bg-white rounded-xl shadow overflow-hidden">
+      <div className="p-3 border-b">
+        <h3 className="font-bold text-sm flex items-center gap-2 mb-2">
+          <span className="w-2 h-5 bg-ok-orange rounded"></span>
+          호텔 위치
+        </h3>
+        <div className="flex gap-1 flex-wrap">
+          {AGENCIES.map(a => (
+            <button key={a} onClick={() => setVisibleAgencies(p => ({ ...p, [a]: !p[a] }))}
+              className={`px-2 py-1 rounded text-xs font-bold border transition ${visibleAgencies[a] ? 'text-white' : 'bg-white'}`}
+              style={visibleAgencies[a] ? { backgroundColor: AGENCY_COLORS[a], borderColor: AGENCY_COLORS[a] } : { borderColor: AGENCY_COLORS[a], color: AGENCY_COLORS[a] }}>
+              {a}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div ref={mapRef} style={{ height: '350px' }} />
+      <div className="p-3 border-t bg-gray-50 overflow-y-auto" style={{ maxHeight: '300px' }}>
+        {AGENCIES.filter(a => visibleAgencies[a]).map(agency => {
+          const hotels = (HOTEL_LOCATIONS[region] || {})[agency] || [];
+          return (
+            <div key={agency} className="mb-2">
+              <div className="text-xs font-bold mb-1" style={{ color: AGENCY_COLORS[agency] }}>{agency}</div>
+              {hotels.map((h, i) => (
+                <div key={i} className="text-xs text-gray-600 py-1 pl-2 border-l-2 mb-1 hover:bg-white rounded-r transition cursor-pointer"
+                  style={{ borderLeftColor: AGENCY_COLORS[agency] }}
+                  onClick={() => {
+                    if (mapInstance.current) {
+                      mapInstance.current.panTo({ lat: h.lat, lng: h.lng });
+                      mapInstance.current.setZoom(15);
+                    }
+                  }}>
+                  <span className="font-bold">{h.name}</span>
+                  <span className="text-gray-400 ml-1">[{h.option}]</span>
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ============ HOTEL COMPARISON ============
+function HotelSection({ hotelData, setHotelData }) {
+  const { isEditMode } = useEditMode();
+  const [tab, setTab] = useState('발리');
+  const hotels = hotelData[tab];
+  const [newAmenity, setNewAmenity] = useState('');
+  const [addingAmenityKey, setAddingAmenityKey] = useState(null);
+  const [lightbox, setLightbox] = useState(null);
+
+  const updateHotelField = (groupIdx, optIdx, field, val) => {
+    setHotelData(prev => {
+      const copy = JSON.parse(JSON.stringify(prev));
+      copy[tab][groupIdx].options[optIdx][field] = val;
+      return copy;
+    });
+  };
+
+  const updateStars = (groupIdx, optIdx, stars) => {
+    setHotelData(prev => {
+      const copy = JSON.parse(JSON.stringify(prev));
+      copy[tab][groupIdx].options[optIdx].stars = stars;
+      return copy;
+    });
+  };
+
+  const removeAmenity = (groupIdx, optIdx, amenityIdx) => {
+    setHotelData(prev => {
+      const copy = JSON.parse(JSON.stringify(prev));
+      copy[tab][groupIdx].options[optIdx].amenities.splice(amenityIdx, 1);
+      return copy;
+    });
+  };
+
+  const addAmenity = (groupIdx, optIdx) => {
+    if (!newAmenity.trim()) return;
+    setHotelData(prev => {
+      const copy = JSON.parse(JSON.stringify(prev));
+      copy[tab][groupIdx].options[optIdx].amenities.push(newAmenity.trim());
+      return copy;
+    });
+    setNewAmenity('');
+    setAddingAmenityKey(null);
+  };
+
+  return (
+    <section id="hotel" className="mb-16 scroll-mt-20">
+      <SectionTitle>호텔 비교</SectionTitle>
+      <TabBar tabs={REGIONS} active={tab} onChange={setTab} />
+      <div className="flex gap-6">
+      {/* 왼쪽: 호텔 카드 */}
+      <div className="flex-1 min-w-0 space-y-6">
+        {hotels.map((group, gi) => {
+          // plan별로 그룹핑
+          const planGroups = [];
+          group.options.forEach((h, oi) => {
+            const planName = h.plan || '';
+            const last = planGroups[planGroups.length - 1];
+            if (last && last.plan === planName) {
+              last.items.push({ h, oi });
+              if (h.planTotal) last.planTotal = h.planTotal;
+            } else {
+              planGroups.push({ plan: planName, items: [{ h, oi }], planTotal: h.planTotal || '' });
+            }
+          });
+          return (
+          <div key={group.agency}>
+            <h3 className="font-bold text-lg mb-3" style={{color: AGENCY_COLORS[group.agency]}}>{group.agency}</h3>
+            <div className="space-y-4">
+              {planGroups.map((pg, pgIdx) => (
+                <div key={pgIdx}>
+                  {/* Plan 헤더 (복수 호텔이 있는 plan만) */}
+                  {pg.items.length > 1 && (
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-sm font-bold px-2.5 py-0.5 rounded-full text-white" style={{backgroundColor: AGENCY_COLORS[group.agency]}}>{pg.plan}</span>
+                      {pg.planTotal && (
+                        <span className="text-sm font-bold text-ok-orange bg-orange-50 px-2.5 py-0.5 rounded-full">
+                          합계: <EditableCell value={pg.planTotal} onSave={(val) => {
+                            const lastItem = pg.items[pg.items.length - 1];
+                            updateHotelField(gi, lastItem.oi, 'planTotal', val);
+                          }} className="inline font-bold text-ok-orange" />
+                        </span>
+                      )}
+                    </div>
+                  )}
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    {pg.items.map(({ h, oi }) => (
+                      <div key={oi} className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+                        {(() => {
+                          const imgs = getHotelImages(tab, group.agency, h.name);
+                          const hasImages = imgs && imgs.length > 0;
+                          return (
+                            <div className={`h-36 relative ${hasImages ? 'hotel-card-img' : ''}`}
+                              style={hasImages ? {} : {backgroundColor: h.color, display:'flex', alignItems:'center', justifyContent:'center'}}
+                              onClick={() => hasImages && setLightbox({ images: imgs, name: h.name })}>
+                              {hasImages ? (
+                                <img src={imgs[0]} alt={h.name} className="w-full h-full object-cover" onError={e => { e.target.style.display='none'; e.target.parentNode.style.backgroundColor=h.color; }} />
+                              ) : null}
+                              <div className="absolute inset-0 flex items-center justify-center text-white text-sm font-bold px-3 text-center"
+                                style={hasImages ? {background:'linear-gradient(transparent 40%, rgba(0,0,0,0.6))'} : {}}>
+                                <span className="drop-shadow-lg" style={hasImages ? {position:'absolute',bottom:'10px',left:'10px',right:'10px',textAlign:'left',fontSize:'13px'} : {}}>
+                                  {pg.items.length > 1 && <span className="bg-white/30 text-white text-xs px-1.5 py-0.5 rounded mr-1">{h.plan}</span>}
+                                  {isEditMode ? (
+                                    <EditableCell value={h.name} onSave={(val) => updateHotelField(gi, oi, 'name', val)} className="text-white" style={{color:'white'}} />
+                                  ) : h.name}
+                                </span>
+                              </div>
+                              {hasImages && <div className="absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-0.5 rounded-full">{imgs.length}장</div>}
+                            </div>
+                          );
+                        })()}
+                        <div className="p-4">
+                          <div className="flex items-center gap-1 mb-1">
+                            {isEditMode ? (
+                              [1,2,3,4,5].map(s => (
+                                <span key={s} className="cursor-pointer text-lg" onClick={() => updateStars(gi, oi, s)}
+                                  style={{color: s <= h.stars ? '#facc15' : '#d1d5db'}}>{'\u2605'}</span>
+                              ))
+                            ) : (
+                              <>
+                                <span className="text-yellow-400">{'★'.repeat(h.stars)}</span>
+                                <span className="text-gray-300">{'★'.repeat(5 - h.stars)}</span>
+                              </>
+                            )}
+                          </div>
+                          <EditableCell value={h.details} onSave={(val) => updateHotelField(gi, oi, 'details', val)} tag="p" className="text-xs text-gray-500 mb-2" />
+                          <div className="flex flex-wrap gap-1 mb-3">
+                            {h.amenities.map((a, ai) => (
+                              <span key={ai} className="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded inline-flex items-center gap-1">
+                                {a}
+                                {isEditMode && (
+                                  <button onClick={() => removeAmenity(gi, oi, ai)} className="text-red-400 hover:text-red-600 font-bold text-xs ml-0.5">&times;</button>
+                                )}
+                              </span>
+                            ))}
+                            {isEditMode && (
+                              addingAmenityKey === `${gi}-${oi}` ? (
+                                <span className="inline-flex items-center gap-1">
+                                  <input className="border rounded text-xs px-2 py-0.5 w-20" value={newAmenity} onChange={e => setNewAmenity(e.target.value)}
+                                    onKeyDown={e => { if(e.key==='Enter') addAmenity(gi,oi); if(e.key==='Escape') { setAddingAmenityKey(null); setNewAmenity(''); }}}
+                                    placeholder="태그명" autoFocus />
+                                  <button onClick={() => addAmenity(gi,oi)} className="text-green-500 text-xs font-bold">+</button>
+                                </span>
+                              ) : (
+                                <button onClick={() => { setAddingAmenityKey(`${gi}-${oi}`); setNewAmenity(''); }}
+                                  className="bg-ok-orange/10 text-ok-orange text-xs px-2 py-0.5 rounded hover:bg-ok-orange/20 font-bold">+ 추가</button>
+                              )
+                            )}
+                          </div>
+                          <div className="text-right font-bold text-ok-orange">
+                            <EditableCell value={h.price} onSave={(val) => updateHotelField(gi, oi, 'price', val)} className="font-bold text-ok-orange" />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          );
+        })}
+      </div>
+      {/* 오른쪽: 호텔 위치 지도 */}
+      <div className="w-[420px] flex-shrink-0 sticky top-20 self-start">
+        <HotelMap region={tab} />
+      </div>
+      </div>
+
+      {lightbox && (
+        <ImageLightbox
+          images={lightbox.images}
+          initialIndex={0}
+          hotelName={lightbox.name}
+          onClose={() => setLightbox(null)}
+        />
+      )}
+    </section>
+  );
+}
+
+// ============ TOUR + ITINERARY + MAP ============
+// Geocoding 함수: 장소명 → 좌표
+async function geocodePlace(placeName, regionHint) {
+  const hints = { '발리': 'Bali, Indonesia', '오키나와': 'Okinawa, Japan', '나고야': 'Nagoya, Japan' };
+  const query = placeName + ', ' + (hints[regionHint] || '');
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(query)}&key=AIzaSyBpN7eNpBsA3iTYpvfrzgSSv3tVvcN_JR4`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.results && data.results.length > 0) {
+      const loc = data.results[0].geometry.location;
+      return { lat: loc.lat, lng: loc.lng, name: placeName };
+    }
+  } catch (e) {}
+  return null;
+}
+
+function TourSection({ itineraryData, setItineraryData }) {
+  const { isEditMode } = useEditMode();
+  const [tab, setTab] = useState('발리');
+  const [visibleAgencies, setVisibleAgencies] = useState({
+    '하나투어': true, '레드캡': true, '롯데관광': true
+  });
+  const mapRef = useRef(null);
+  const mapInstance = useRef(null);
+  const markersRef = useRef([]);
+  const agencyMarkersRef = useRef({}); // { agencyName: [{marker, infoWindow}, ...] }
+  const [mapClickTarget, setMapClickTarget] = useState(null); // {agency, dayIdx} - 지도 클릭 대기 상태
+  const [newPlaceName, setNewPlaceName] = useState('');
+
+  // 마커 하이라이트 (타임라인 아이템 호버 시)
+  const highlightMarker = React.useCallback((agency, globalCoordIdx) => {
+    const markers = agencyMarkersRef.current[agency];
+    if (markers && markers[globalCoordIdx]) {
+      const { marker, infoWindow } = markers[globalCoordIdx];
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+      infoWindow.open(mapInstance.current, marker);
+    }
+  }, []);
+  const unhighlightMarker = React.useCallback((agency, globalCoordIdx) => {
+    const markers = agencyMarkersRef.current[agency];
+    if (markers && markers[globalCoordIdx]) {
+      markers[globalCoordIdx].marker.setAnimation(null);
+      markers[globalCoordIdx].infoWindow.close();
+    }
+  }, []);
+
+  const toggleAgency = (a) => {
+    setVisibleAgencies(p => ({ ...p, [a]: !p[a] }));
+  };
+
+  const updateDayTitle = (agency, dayIdx, val) => {
+    setItineraryData(prev => {
+      const copy = JSON.parse(JSON.stringify(prev));
+      copy[tab][agency].days[dayIdx].title = val;
+      return copy;
+    });
+  };
+
+  const updateDayItem = (agency, dayIdx, itemIdx, val) => {
+    setItineraryData(prev => {
+      const copy = JSON.parse(JSON.stringify(prev));
+      copy[tab][agency].days[dayIdx].items[itemIdx] = val;
+      return copy;
+    });
+  };
+
+  const addDayItem = (agency, dayIdx) => {
+    setItineraryData(prev => {
+      const copy = JSON.parse(JSON.stringify(prev));
+      copy[tab][agency].days[dayIdx].items.push('새 항목');
+      return copy;
+    });
+  };
+
+  const removeDayItem = (agency, dayIdx, itemIdx) => {
+    setItineraryData(prev => {
+      const copy = JSON.parse(JSON.stringify(prev));
+      copy[tab][agency].days[dayIdx].items.splice(itemIdx, 1);
+      return copy;
+    });
+  };
+
+  // 좌표 추가 (이름 직접 입력 + 지도 클릭으로 좌표 지정)
+  const addCoordByMapClick = (agency, dayIdx) => {
+    setMapClickTarget({ agency, dayIdx });
+    setNewPlaceName('');
+  };
+
+  // 좌표 삭제
+  const removeCoord = (agency, dayIdx, coordIdx) => {
+    setItineraryData(prev => {
+      const copy = JSON.parse(JSON.stringify(prev));
+      copy[tab][agency].days[dayIdx].coords.splice(coordIdx, 1);
+      return copy;
+    });
+  };
+
+  // 지도 클릭으로 좌표 확정
+  const handleMapClick = useCallback((e) => {
+    if (!mapClickTarget) return;
+    const lat = e.latLng.lat();
+    const lng = e.latLng.lng();
+    const name = newPlaceName.trim() || `포인트 (${lat.toFixed(3)}, ${lng.toFixed(3)})`;
+    setItineraryData(prev => {
+      const copy = JSON.parse(JSON.stringify(prev));
+      copy[tab][mapClickTarget.agency].days[mapClickTarget.dayIdx].coords.push({ lat, lng, name });
+      return copy;
+    });
+    setMapClickTarget(null);
+    setNewPlaceName('');
+  }, [mapClickTarget, newPlaceName, tab]);
+
+  useEffect(() => {
+    if (!window.google || !window.google.maps) return;
+    const center = MAP_CENTERS[tab];
+    if (!mapInstance.current) {
+      mapInstance.current = new google.maps.Map(mapRef.current, {
+        center: { lat: center.lat, lng: center.lng },
+        zoom: center.zoom,
+        styles: [{ featureType:'poi', stylers:[{visibility:'off'}] }],
+      });
+    } else {
+      mapInstance.current.setCenter({ lat: center.lat, lng: center.lng });
+      mapInstance.current.setZoom(center.zoom);
+    }
+
+    // 지도 클릭 이벤트 (편집 모드에서 좌표 추가)
+    google.maps.event.clearListeners(mapInstance.current, 'click');
+    mapInstance.current.addListener('click', handleMapClick);
+
+    // Clear old markers
+    markersRef.current.forEach(m => m.setMap(null));
+    markersRef.current = [];
+    agencyMarkersRef.current = {};
+
+    // Add markers per agency
+    const data = itineraryData[tab];
+    AGENCIES.forEach(agency => {
+      if (!visibleAgencies[agency]) return;
+      const color = AGENCY_COLORS[agency];
+      const itin = data[agency];
+      let markerIndex = 1;
+      const pathCoords = [];
+      agencyMarkersRef.current[agency] = [];
+
+      itin.days.forEach(day => {
+        day.coords.forEach(c => {
+          pathCoords.push({ lat: c.lat, lng: c.lng });
+          const displayName = c.name && !c.name.startsWith('포인트') ? c.name : `${day.day} #${markerIndex}`;
+          const marker = new google.maps.Marker({
+            position: { lat: c.lat, lng: c.lng },
+            map: mapInstance.current,
+            label: { text: String(markerIndex), color: 'white', fontWeight: 'bold', fontSize: '11px' },
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              fillColor: color,
+              fillOpacity: 1,
+              strokeColor: '#fff',
+              strokeWeight: 2,
+              scale: 14,
+            },
+            title: `${agency} - ${displayName}`,
+          });
+          const infoWindow = new google.maps.InfoWindow({
+            content: `<div style="font-size:13px;padding:4px;"><b style="color:${color}">${agency}</b><br/><span style="font-size:11px;color:#666;">${day.day}</span><br/><b>${displayName}</b></div>`
+          });
+          marker.addListener('click', () => infoWindow.open(mapInstance.current, marker));
+          markersRef.current.push(marker);
+          agencyMarkersRef.current[agency].push({ marker, infoWindow });
+          markerIndex++;
+        });
+      });
+
+      // Draw polyline
+      if (pathCoords.length > 1) {
+        const polyline = new google.maps.Polyline({
+          path: pathCoords,
+          geodesic: true,
+          strokeColor: color,
+          strokeOpacity: 0.7,
+          strokeWeight: 3,
+          map: mapInstance.current,
+        });
+        markersRef.current.push(polyline);
+      }
+    });
+  }, [tab, visibleAgencies, itineraryData, handleMapClick]);
+
+  const data = itineraryData[tab];
+
+  return (
+    <section id="tour" className="mb-16 scroll-mt-20">
+      <SectionTitle>관광+일정 비교</SectionTitle>
+      <TabBar tabs={REGIONS} active={tab} onChange={setTab} />
+
+      {/* Agency toggles */}
+      <div className="flex gap-3 mb-4">
+        {AGENCIES.map(a => (
+          <button key={a} onClick={() => toggleAgency(a)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium border-2 transition ${visibleAgencies[a] ? 'text-white' : 'bg-white'}`}
+            style={visibleAgencies[a] ? { backgroundColor: AGENCY_COLORS[a], borderColor: AGENCY_COLORS[a] } : { borderColor: AGENCY_COLORS[a], color: AGENCY_COLORS[a] }}>
+            {a}
+          </button>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        {/* Timeline */}
+        <div className="space-y-4 max-h-[700px] overflow-y-auto pr-2">
+          {AGENCIES.filter(a => visibleAgencies[a]).map(agency => {
+            const days = data[agency].days;
+            const hasBatches = days.some(d => d.batch);
+
+            // Pre-compute global coord/item start indices per day (flat array order, matches map markers)
+            const dayCoordStarts = [];
+            const dayItemStarts = [];
+            let cTotal = 0, iTotal = 0;
+            days.forEach((day, i) => {
+              dayCoordStarts[i] = cTotal;
+              dayItemStarts[i] = iTotal;
+              cTotal += (day.coords || []).length;
+              iTotal += day.items.length;
+            });
+
+            // Group days by day key (preserves insertion order)
+            const dayGroups = [];
+            const dayGroupMap = {};
+            days.forEach((day, idx) => {
+              const key = day.day;
+              if (!dayGroupMap[key]) {
+                dayGroupMap[key] = [];
+                dayGroups.push({ dayKey: key, entries: dayGroupMap[key] });
+              }
+              dayGroupMap[key].push({ ...day, _idx: idx });
+            });
+
+            // Render helper for a single day entry (items + edit coords)
+            const renderDayEntry = (entry, di, agencyColor) => {
+              const coordStart = dayCoordStarts[di];
+              const coordEnd = coordStart + (entry.coords || []).length;
+              const itemStart = dayItemStarts[di];
+              return (
+                <React.Fragment key={di}>
+                  <ul className="text-xs text-gray-600 mt-1 space-y-0.5">
+                    {entry.items.map((item, ii) => {
+                      const currentIdx = itemStart + ii;
+                      const coordIdx = coordStart + ii < coordEnd ? coordStart + ii : -1;
+                      return (
+                      <li key={ii} className="flex items-center gap-1">
+                        <span className={`w-4 h-4 rounded-full flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 ${coordIdx >= 0 ? 'cursor-pointer hover:scale-125 hover:ring-2 hover:ring-offset-1 transition-transform' : ''}`}
+                          style={{ backgroundColor: agencyColor, ringColor: agencyColor }}
+                          onMouseEnter={() => coordIdx >= 0 && highlightMarker(agency, coordIdx)}
+                          onMouseLeave={() => coordIdx >= 0 && unhighlightMarker(agency, coordIdx)}>
+                          {currentIdx + 1}
+                        </span>
+                        <EditableCell value={item} onSave={(val) => updateDayItem(agency, di, ii, val)} className="inline" />
+                        {isEditMode && entry.items.length > 1 && (
+                          <button onClick={() => removeDayItem(agency, di, ii)} className="text-red-400 hover:text-red-600 text-xs ml-1 flex-shrink-0">&times;</button>
+                        )}
+                      </li>
+                      );
+                    })}
+                    {isEditMode && (
+                      <li>
+                        <button onClick={() => addDayItem(agency, di)} className="text-ok-orange text-xs hover:underline">+ 항목 추가</button>
+                      </li>
+                    )}
+                  </ul>
+                  {isEditMode && (
+                    <div className="mt-2 p-2 bg-blue-50 rounded-lg border border-blue-100">
+                      <div className="text-xs font-bold text-blue-600 mb-1">📍 동선 포인트 ({entry.coords.length}개)</div>
+                      {entry.coords.map((c, ci) => (
+                        <div key={ci} className="flex items-center gap-1 text-xs text-blue-800 py-0.5">
+                          <span className="bg-blue-200 text-blue-900 w-4 h-4 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">{ci+1}</span>
+                          <span className="flex-1">{c.name}</span>
+                          <span className="text-blue-400 text-xs">{c.lat.toFixed(3)},{c.lng.toFixed(3)}</span>
+                          <button onClick={() => removeCoord(agency, di, ci)} className="text-red-400 hover:text-red-600 font-bold flex-shrink-0">&times;</button>
+                        </div>
+                      ))}
+                      {mapClickTarget?.agency === agency && mapClickTarget?.dayIdx === di ? (
+                        <div className="mt-1 p-2 bg-green-50 border border-green-300 rounded">
+                          <div className="text-xs text-green-700 font-bold mb-1">지도를 클릭하면 포인트가 추가됩니다</div>
+                          <div className="flex gap-1">
+                            <input className="flex-1 border border-green-300 rounded px-2 py-1 text-xs"
+                              placeholder="장소명 (선택, 입력 후 지도 클릭)"
+                              value={newPlaceName}
+                              onChange={e => setNewPlaceName(e.target.value)}
+                              autoFocus />
+                            <button onClick={() => setMapClickTarget(null)}
+                              className="bg-gray-400 text-white px-2 py-1 rounded text-xs font-bold hover:bg-gray-500">취소</button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="mt-1 flex gap-1">
+                          <button onClick={() => addCoordByMapClick(agency, di)}
+                            className="bg-blue-500 text-white px-3 py-1 rounded text-xs font-bold hover:bg-blue-600 flex-1">
+                            지도 클릭으로 추가
+                          </button>
+                          <button onClick={() => {
+                            const input = window.prompt('좌표와 장소명 입력\n형식: 위도, 경도, 장소명\n예: 26.2187, 127.6937, 나하 호텔');
+                            if (!input) return;
+                            const parts = input.split(',').map(s => s.trim());
+                            const lat = parseFloat(parts[0]);
+                            const lng = parseFloat(parts[1]);
+                            const name = parts.slice(2).join(',').trim() || ('포인트 (' + lat.toFixed(3) + ', ' + lng.toFixed(3) + ')');
+                            if (isNaN(lat) || isNaN(lng)) { alert('좌표 형식이 올바르지 않습니다'); return; }
+                            setItineraryData(prev => {
+                              const copy = JSON.parse(JSON.stringify(prev));
+                              copy[tab][agency].days[di].coords.push({ lat, lng, name });
+                              return copy;
+                            });
+                          }}
+                            className="bg-gray-600 text-white px-3 py-1 rounded text-xs font-bold hover:bg-gray-700 flex-1">
+                            좌표 직접 입력
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </React.Fragment>
+              );
+            };
+
+            const batchNames = hasBatches ? [...new Set(days.filter(d => d.batch).map(d => d.batch))] : [];
+
+            return (
+            <div key={agency} className="bg-white rounded-xl shadow p-5">
+              <h3 className="font-bold text-lg mb-3" style={{ color: AGENCY_COLORS[agency] }}>{agency}</h3>
+              {hasBatches ? (
+                /* 차수 비교 테이블 레이아웃 (행=Day, 열=차수) */
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm border-collapse">
+                    <thead>
+                      <tr className="border-b-2" style={{ borderColor: AGENCY_COLORS[agency] }}>
+                        <th className="text-left py-2 px-2 w-16 font-bold text-xs text-gray-500 uppercase">일차</th>
+                        {batchNames.map((b, bi) => (
+                          <th key={b} className="text-left py-2 px-3">
+                            <span className={`text-xs px-2.5 py-1 rounded-full font-bold ${bi === 0 ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700'}`}>
+                              {b}
+                            </span>
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {dayGroups.map((group, gi) => (
+                        <tr key={gi} className="border-b border-gray-100 align-top">
+                          <td className="py-3 px-2 font-bold text-sm whitespace-nowrap" style={{ color: AGENCY_COLORS[agency] }}>
+                            <div className="flex items-center gap-2">
+                              <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: AGENCY_COLORS[agency] }}></span>
+                              {group.dayKey}
+                            </div>
+                          </td>
+                          {batchNames.map((batchName) => {
+                            const entry = group.entries.find(e => e.batch === batchName);
+                            if (!entry) return <td key={batchName} className="py-3 px-3 text-gray-300 text-xs">-</td>;
+                            return (
+                              <td key={batchName} className="py-3 px-3">
+                                <div className="font-medium text-sm text-gray-800 mb-1">
+                                  <EditableCell value={entry.title} onSave={(val) => updateDayTitle(agency, entry._idx, val)} className="inline" />
+                                </div>
+                                {renderDayEntry(entry, entry._idx, AGENCY_COLORS[agency])}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                /* 차수 없는 기존 타임라인 레이아웃 */
+                <div className="timeline-line pl-8 space-y-3">
+                  {dayGroups.map((group, gi) => (
+                    <div key={gi} className="flex gap-3 items-start">
+                      <div className="timeline-dot mt-1" style={{ backgroundColor: AGENCY_COLORS[agency] }}></div>
+                      <div className="flex-1">
+                        <div className="font-bold text-sm" style={{ color: AGENCY_COLORS[agency] }}>
+                          {group.dayKey} - <EditableCell value={group.entries[0].title} onSave={(val) => updateDayTitle(agency, group.entries[0]._idx, val)} className="inline" />
+                        </div>
+                        {renderDayEntry(group.entries[0], group.entries[0]._idx, AGENCY_COLORS[agency])}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            );
+          })}
+        </div>
+
+        {/* Map */}
+        <div className="bg-white rounded-xl shadow overflow-hidden relative" style={{ minHeight: '500px' }}>
+          <div ref={mapRef} className="w-full h-full" style={{ minHeight: '500px', cursor: mapClickTarget ? 'crosshair' : '' }} />
+          {mapClickTarget && (
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg text-sm font-bold z-10 animate-pulse">
+              지도를 클릭하여 "{newPlaceName || '포인트'}" 위치를 지정하세요
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============ ETC SECTION ============
+function EtcSection({ onInternalScoresChange, internalEvalData, quoteData, safetySubmission, setSafetySubmission }) {
+  const { isEditMode } = useEditMode();
+  const loadNotes = () => {
+    try {
+      const s = localStorage.getItem('ok_eval_notes');
+      if (s) return JSON.parse(s);
+    } catch(e) {}
+    return {};
+  };
+  const [notes, setNotes] = useState(loadNotes);
+
+  useEffect(() => {
+    localStorage.setItem('ok_eval_notes', JSON.stringify(notes));
+  }, [notes]);
+
+  const updateNote = (key, val) => setNotes(p => ({ ...p, [key]: val }));
+
+  // 견적 시트의 수수료율 행에서 동적 추출
+  const feeRates = React.useMemo(() => {
+    const rates = { '하나투어': {}, '레드캡': {}, '롯데관광': {} };
+    REGIONS.forEach(region => {
+      const qd = quoteData?.[region];
+      if (!qd) return;
+      const feeRow = qd.rows.find(r => r[0] && r[0].includes('수수료'));
+      if (!feeRow) return;
+      qd.headers.forEach((h, i) => {
+        if (i === 0) return;
+        const val = feeRow[i] || '-';
+        AGENCIES.forEach(a => {
+          const shortName = a.replace('관광', '');
+          if (h.includes(shortName) && !rates[a][region]) {
+            rates[a][region] = val;
+          }
+        });
+      });
+    });
+    return rates;
+  }, [quoteData]);
+
+  return (
+    <section id="etc" className="mb-16 scroll-mt-20">
+      <SectionTitle>기타 평가</SectionTitle>
+      <div className="space-y-6">
+        {/* Safety Manual */}
+        <div className="bg-white rounded-xl shadow p-6">
+          <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
+            <span className="w-2 h-6 bg-ok-orange rounded"></span>
+            안전사고 매뉴얼 보유 평가
+          </h3>
+          <div className="text-xs text-gray-500 mb-4 bg-gray-50 rounded-lg p-3">
+            제출 체크 시 평가결과 &gt; 안전사고 매뉴얼 점수에 자동 반영됩니다. (안전사고 매뉴얼 7.5점 + 병원 리스트 2.5점 = 10점 만점)
+          </div>
+          <div className="overflow-x-auto mb-4">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className="p-3 text-left">항목</th>
+                  <th className="p-3 text-center">배점</th>
+                  {AGENCIES.map(a => <th key={a} className="p-3 text-center" style={{ color: AGENCY_COLORS[a] }}>{a}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-t">
+                  <td className="p-3 font-medium">안전사고 매뉴얼</td>
+                  <td className="p-3 text-center text-ok-orange font-bold">7.5점</td>
+                  {AGENCIES.map(a => (
+                    <td key={a} className="p-3 text-center">
+                      <label className="inline-flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox"
+                          checked={safetySubmission[a]?.manual || false}
+                          disabled={!isEditMode}
+                          onChange={e => {
+                            const newSafety = { ...safetySubmission, [a]: { ...safetySubmission[a], manual: e.target.checked } };
+                            setSafetySubmission(newSafety);
+                            saveToSheet('안전사고_매뉴얼', ['업체명', '안전사고 매뉴얼', '병원 리스트', '메모', '수수료 메모'],
+                              AGENCIES.map(ag => [ag, newSafety[ag]?.manual ? '제출' : '미제출', newSafety[ag]?.hospital ? '제출' : '미제출', newSafety[ag]?.memo || '', newSafety[ag]?.feeMemo || '']));
+                          }}
+                          className="w-5 h-5 accent-ok-orange rounded" />
+                        <span className={`text-sm font-bold ${safetySubmission[a]?.manual ? 'text-green-600' : 'text-gray-400'}`}>
+                          {safetySubmission[a]?.manual ? '제출' : '미제출'}
+                        </span>
+                      </label>
+                    </td>
+                  ))}
+                </tr>
+                <tr className="border-t">
+                  <td className="p-3 font-medium">병원 리스트</td>
+                  <td className="p-3 text-center text-ok-orange font-bold">2.5점</td>
+                  {AGENCIES.map(a => (
+                    <td key={a} className="p-3 text-center">
+                      <label className="inline-flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox"
+                          checked={safetySubmission[a]?.hospital || false}
+                          disabled={!isEditMode}
+                          onChange={e => {
+                            const newSafety = { ...safetySubmission, [a]: { ...safetySubmission[a], hospital: e.target.checked } };
+                            setSafetySubmission(newSafety);
+                            saveToSheet('안전사고_매뉴얼', ['업체명', '안전사고 매뉴얼', '병원 리스트', '메모', '수수료 메모'],
+                              AGENCIES.map(ag => [ag, newSafety[ag]?.manual ? '제출' : '미제출', newSafety[ag]?.hospital ? '제출' : '미제출', newSafety[ag]?.memo || '', newSafety[ag]?.feeMemo || '']));
+                          }}
+                          className="w-5 h-5 accent-ok-orange rounded" />
+                        <span className={`text-sm font-bold ${safetySubmission[a]?.hospital ? 'text-green-600' : 'text-gray-400'}`}>
+                          {safetySubmission[a]?.hospital ? '제출' : '미제출'}
+                        </span>
+                      </label>
+                    </td>
+                  ))}
+                </tr>
+                <tr className="border-t-2 border-ok-orange bg-ok-light font-bold">
+                  <td className="p-3">합계</td>
+                  <td className="p-3 text-center text-ok-orange">10점</td>
+                  {AGENCIES.map(a => {
+                    const total = (safetySubmission[a]?.manual ? 7.5 : 0) + (safetySubmission[a]?.hospital ? 2.5 : 0);
+                    return <td key={a} className="p-3 text-center text-lg" style={{ color: AGENCY_COLORS[a] }}>{total}점</td>;
+                  })}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {AGENCIES.map(a => (
+              <div key={a}>
+                <label className="font-medium text-sm mb-1 block" style={{ color: AGENCY_COLORS[a] }}>{a} 메모</label>
+                <textarea rows={2}
+                  className="w-full border rounded-lg p-3 text-sm focus:ring-2 focus:ring-ok-orange focus:border-ok-orange outline-none disabled:bg-gray-50 disabled:text-gray-500"
+                  placeholder={`${a} 안전사고 매뉴얼 관련 메모...`}
+                  disabled={!isEditMode}
+                  value={safetySubmission[a]?.memo || ''}
+                  onChange={e => {
+                    const newSafety = { ...safetySubmission, [a]: { ...safetySubmission[a], memo: e.target.value } };
+                    setSafetySubmission(newSafety);
+                  }}
+                  onBlur={() => {
+                    const ss = safetySubmission;
+                    saveToSheet('안전사고_매뉴얼', ['업체명', '안전사고 매뉴얼', '병원 리스트', '메모', '수수료 메모'],
+                      AGENCIES.map(ag => [ag, ss[ag]?.manual ? '제출' : '미제출', ss[ag]?.hospital ? '제출' : '미제출', ss[ag]?.memo || '', ss[ag]?.feeMemo || '']));
+                  }} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Fee */}
+        <div className="bg-white rounded-xl shadow p-6">
+          <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
+            <span className="w-2 h-6 bg-ok-orange rounded"></span>
+            수수료 평가
+          </h3>
+          <div className="overflow-x-auto mb-4">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className="p-3 text-left">지역</th>
+                  {AGENCIES.map(a => <th key={a} className="p-3 text-center" style={{ color: AGENCY_COLORS[a] }}>{a}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {REGIONS.map(r => (
+                  <tr key={r} className="border-t">
+                    <td className="p-3 font-medium">{r}</td>
+                    {AGENCIES.map(a => (
+                      <td key={a} className="p-3 text-center font-bold">{feeRates[a][r]}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {AGENCIES.map(a => (
+              <div key={a}>
+                <label className="font-medium text-sm mb-1 block" style={{ color: AGENCY_COLORS[a] }}>{a}</label>
+                <textarea rows={3}
+                  className="w-full border rounded-lg p-3 text-sm focus:ring-2 focus:ring-ok-orange focus:border-ok-orange outline-none disabled:bg-gray-50 disabled:text-gray-500"
+                  placeholder={`${a} 수수료 관련 메모...`}
+                  value={safetySubmission[a]?.feeMemo || ''}
+                  onChange={e => {
+                    const newSafety = { ...safetySubmission, [a]: { ...safetySubmission[a], feeMemo: e.target.value } };
+                    setSafetySubmission(newSafety);
+                  }}
+                  onBlur={() => {
+                    const ss = safetySubmission;
+                    saveToSheet('안전사고_매뉴얼', ['업체명', '안전사고 매뉴얼', '병원 리스트', '메모', '수수료 메모'],
+                      AGENCIES.map(ag => [ag, ss[ag]?.manual ? '제출' : '미제출', ss[ag]?.hospital ? '제출' : '미제출', ss[ag]?.memo || '', ss[ag]?.feeMemo || '']));
+                  }}
+                  disabled={!isEditMode} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 내부 자체 평가 */}
+        <InternalEvalSection evaluatorsFromSheet={internalEvalData} onScoresChange={onInternalScoresChange} />
+      </div>
+    </section>
+  );
+}
+
+// ============ INTERNAL EVAL (대상자별) ============
+const INTERNAL_CRITERIA = [
+  { id: 'proposal', label: '제안의 적정성', weight: 10 },
+  { id: 'operation', label: '운영능력의 신뢰성', weight: 10 },
+  { id: 'acceptance', label: '요구의 수용성', weight: 30 },
+  { id: 'cost', label: '견적의 합리성', weight: 50 },
+];
+
+function InternalEvalSection({ evaluatorsFromSheet, onScoresChange }) {
+  const { isEditMode } = useEditMode();
+  const [evaluators, setEvaluators] = useState(evaluatorsFromSheet || []);
+  const [newName, setNewName] = useState('');
+  const [saving, setSaving] = useState('');
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3kY_L90YU872LMrbLqaWmdVfTKr2Juz0pVRYs_qDmWMBZ5bEKuU9A1KJhp8f-ndaEmQ/exec';
+
+  // 시트 데이터가 로딩되면 반영
+  useEffect(() => {
+    if (evaluatorsFromSheet && evaluatorsFromSheet.length > 0) {
+      setEvaluators(evaluatorsFromSheet);
+    }
+  }, [evaluatorsFromSheet]);
+
+  // 평가자 데이터 변경 시 상위 평가 결과에 평균 점수 전달
+  useEffect(() => {
+    if (onScoresChange && evaluators.length > 0) {
+      const scoreMap = {};
+      AGENCIES.forEach(a => { scoreMap[a] = getAvg(a); });
+      onScoresChange(scoreMap);
+    }
+  }, [evaluators]);
+
+  const getTotal = (ev, a) => {
+    let t = 0;
+    INTERNAL_CRITERIA.forEach(c => { t += (ev.scores[a + '_' + c.id] || 0) * c.weight / 100; });
+    return Math.round(t * 100) / 100;
+  };
+
+  const getAvg = (a) => {
+    if (!evaluators.length) return 0;
+    let s = 0;
+    evaluators.forEach(ev => { s += getTotal(ev, a); });
+    return Math.round(s / evaluators.length * 100) / 100;
+  };
+
+  // 스프레드시트에 저장
+  const saveToSheet = async (newEvaluators) => {
+    setSaving('저장 중...');
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ evaluators: newEvaluators }),
+      });
+      setSaving('저장 완료!');
+    } catch(e) {
+      setSaving('저장 실패');
+    }
+    setTimeout(() => setSaving(''), 2000);
+  };
+
+  // 대상자 추가
+  const addEvaluator = () => {
+    console.log('addEvaluator called, newName:', newName);
+    const name = newName.trim();
+    if (!name) { console.log('empty name, return'); return; }
+    if (evaluators.some(ev => ev.name === name)) { console.log('duplicate name'); alert('이미 존재하는 평가자입니다.'); return; }
+    const newList = evaluators.concat([{ name: name, scores: {} }]);
+    console.log('newList length:', newList.length);
+    setEvaluators(newList);
+    setNewName('');
+    saveToSheet(newList);
+  };
+
+  // 대상자 삭제
+  const removeEvaluator = (idx) => {
+    if (!window.confirm(evaluators[idx].name + ' 평가자를 삭제하시겠습니까?')) return;
+    const newList = evaluators.filter((_, i) => i !== idx);
+    setEvaluators(newList);
+    saveToSheet(newList);
+  };
+
+  // 점수 변경
+  const setScore = (evalIdx, agency, criteriaId, score) => {
+    const newList = evaluators.map((ev, i) => {
+      if (i !== evalIdx) return ev;
+      return { ...ev, scores: { ...ev.scores, [agency + '_' + criteriaId]: score } };
+    });
+    setEvaluators(newList);
+    saveToSheet(newList);
+  };
+
+  return (
+    <div className="bg-white rounded-xl shadow p-6">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="font-bold text-lg flex items-center gap-2">
+          <span className="w-2 h-6 bg-ok-orange rounded"></span>
+          내부 자체 평가
+        </h3>
+        {saving && (
+          <span className={`text-xs px-3 py-1 rounded-full font-bold ${saving.includes('완료') ? 'bg-green-100 text-green-700' : saving.includes('실패') ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}`}>
+            {saving}
+          </span>
+        )}
+      </div>
+      <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+        <div className="text-xs font-bold text-gray-500 mb-2">평가 기준 (총 100점)</div>
+        <div className="flex flex-wrap gap-3">
+          {INTERNAL_CRITERIA.map(c => (
+            <div key={c.id} className="flex items-center gap-1">
+              <span className="bg-ok-orange text-white text-xs px-2 py-0.5 rounded-full font-bold">{c.weight}%</span>
+              <span className="text-sm">{c.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      {evaluators.length > 0 && (
+        <div className="mb-6 p-4 bg-gradient-to-r from-ok-light to-white rounded-xl border border-ok-orange/20">
+          <div className="text-sm font-bold text-ok-dark mb-3">종합 평균 (평가자 {evaluators.length}명)</div>
+          <div className="grid grid-cols-3 gap-4">
+            {AGENCIES.map(a => (
+              <div key={a} className="text-center">
+                <div className="text-lg font-bold" style={{color:AGENCY_COLORS[a]}}>{a}</div>
+                <div className="text-2xl font-bold" style={{color:AGENCY_COLORS[a]}}>{getAvg(a).toFixed(2)}<span className="text-sm text-gray-400">점</span></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {/* 대상자 추가 */}
+      {isEditMode && (
+      <div className="flex gap-2 mb-4">
+        <input className="flex-1 border rounded-lg px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-ok-orange"
+          placeholder="평가 대상자 이름 입력" value={newName}
+          onChange={e => setNewName(e.target.value)}
+          onKeyDown={e => { if (e.key === 'Enter') addEvaluator(); }} />
+        <button onClick={addEvaluator}
+          className="bg-ok-orange text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-ok-mid transition">
+          + 대상자 추가
+        </button>
+      </div>
+      )}
+      {evaluators.length === 0 ? (
+        <div className="text-center py-10 text-gray-400 text-sm border-2 border-dashed rounded-xl">
+          평가 대상자를 추가하면 평가표가 생성됩니다
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {evaluators.map((ev, ei) => (
+            <div key={ei} className="border rounded-xl overflow-hidden">
+              <div className="bg-gray-800 text-white px-4 py-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="bg-ok-orange w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">{ei+1}</span>
+                  <span className="font-bold">{ev.name}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  {AGENCIES.map(a => (
+                    <span key={a} className="text-xs" style={{color:AGENCY_COLORS[a]}}>
+                      {a}: <span className="font-bold">{getTotal(ev, a).toFixed(2)}</span>점
+                    </span>
+                  ))}
+                  {isEditMode && <button onClick={() => removeEvaluator(ei)}
+                    className="bg-red-500/80 hover:bg-red-600 text-white text-xs px-3 py-1 rounded ml-2 transition">삭제</button>}
+                </div>
+              </div>
+              <table className="w-full text-sm">
+                <thead><tr className="bg-gray-50">
+                  <th className="p-2 text-left text-xs">평가항목</th>
+                  <th className="p-2 text-center text-xs w-16">비중</th>
+                  {AGENCIES.map(a => <th key={a} className="p-2 text-center text-xs" style={{color:AGENCY_COLORS[a]}}>{a}</th>)}
+                </tr></thead>
+                <tbody>
+                  {INTERNAL_CRITERIA.map(c => (
+                    <tr key={c.id} className="border-t">
+                      <td className="p-2 text-xs font-medium">{c.label}</td>
+                      <td className="p-2 text-center text-xs text-ok-orange font-bold">{c.weight}%</td>
+                      {AGENCIES.map(a => {
+                        const score = ev.scores[a + '_' + c.id] || 0;
+                        return (
+                          <td key={a} className="p-2 text-center">
+                            <div className="flex justify-center gap-0.5">
+                              {[1,2,3,4,5].map(v => (
+                                <button key={v} onClick={() => isEditMode && setScore(ei, a, c.id, v)}
+                                  disabled={!isEditMode}
+                                  className={`w-7 h-7 rounded-full text-xs font-bold transition ${isEditMode ? 'cursor-pointer hover:scale-110' : 'cursor-default'} ${score===v ? 'text-white shadow-md' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'}`}
+                                  style={score===v ? {backgroundColor:AGENCY_COLORS[a]} : {}}>
+                                  {v}
+                                </button>
+                              ))}
+                            </div>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot><tr className="border-t-2 bg-ok-light font-bold">
+                  <td className="p-2 text-xs">가중 합산</td>
+                  <td className="p-2 text-center text-xs">100%</td>
+                  {AGENCIES.map(a => <td key={a} className="p-2 text-center text-sm" style={{color:AGENCY_COLORS[a]}}>{getTotal(ev, a).toFixed(2)}</td>)}
+                </tr></tfoot>
+              </table>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ============ PDF EXPORT ============
+async function exportPDF() {
+  const { jsPDF } = window.jspdf;
+
+  const editToolbar = document.querySelector('.edit-toolbar');
+  if (editToolbar) editToolbar.style.display = 'none';
+
+  const loading = document.createElement('div');
+  loading.innerHTML = '<div style="position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;color:white;font-size:20px;font-weight:bold;">PDF 생성 중... 잠시만 기다려주세요</div>';
+  document.body.appendChild(loading);
+
+  const wait = (ms) => new Promise(r => setTimeout(r, ms));
+
+  // 섹션의 탭 버튼 클릭 후 렌더링 대기
+  async function clickTab(section, tabName) {
+    const buttons = section.querySelectorAll('.tab-btn');
+    for (const btn of buttons) {
+      if (btn.textContent.trim() === tabName) {
+        btn.click();
+        await wait(300);
+        return;
+      }
+    }
+  }
+
+  async function captureSection(section) {
+    return html2canvas(section, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      scrollY: -window.scrollY,
+      backgroundColor: '#f3f4f6',
+    });
+  }
+
+  try {
+    const pdf = new jsPDF('l', 'mm', 'a4');
+    const pageW = 297;
+    const pageH = 210;
+    const margin = 6;
+    const contentW = pageW - margin * 2;
+    const contentH = pageH - margin * 2;
+    let isFirstPage = true;
+
+    function addCanvasToPdf(canvas) {
+      const imgData = canvas.toDataURL('image/jpeg', 0.9);
+      const imgW = contentW;
+      const imgH = (canvas.height * contentW) / canvas.width;
+
+      if (!isFirstPage) pdf.addPage();
+      isFirstPage = false;
+
+      if (imgH <= contentH) {
+        pdf.addImage(imgData, 'JPEG', margin, margin, imgW, imgH);
+      } else {
+        let heightLeft = imgH;
+        let position = 0;
+        pdf.addImage(imgData, 'JPEG', margin, margin, imgW, imgH);
+        heightLeft -= contentH;
+        while (heightLeft > 0) {
+          position = -(imgH - heightLeft);
+          pdf.addPage();
+          pdf.addImage(imgData, 'JPEG', margin, margin + position, imgW, imgH);
+          heightLeft -= contentH;
+        }
+      }
+    }
+
+    // 탭 없는 섹션
+    for (const id of ['overview', 'evaluation', 'etc']) {
+      const section = document.getElementById(id);
+      if (section) addCanvasToPdf(await captureSection(section));
+    }
+
+    // 탭 있는 섹션: 3개 지역 모두 캡처
+    const regions = ['발리', '오키나와', '나고야'];
+    for (const id of ['quote', 'flight', 'hotel', 'tour']) {
+      const section = document.getElementById(id);
+      if (!section) continue;
+      for (const region of regions) {
+        await clickTab(section, region);
+        addCanvasToPdf(await captureSection(section));
+      }
+    }
+
+    pdf.save('OK금융그룹_해외연수_업체평가_' + new Date().toISOString().slice(0,10) + '.pdf');
+  } catch(err) {
+    alert('PDF 생성 실패: ' + err.message);
+  }
+
+  document.body.removeChild(loading);
+  if (editToolbar) editToolbar.style.display = '';
+}
+
+// ============ RENDER ============
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>

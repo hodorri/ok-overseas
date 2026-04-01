@@ -1,0 +1,45 @@
+# 제안서 원본 (대용량)
+*.pdf
+*.pptx
+*.xlsx
+
+# 환경변수
+.env
+.env.local
+
+# Node
+node_modules/
+.vercel/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PDF 추출 임시파일
+slides/
+하나투어_pages/
+롯데관광_pages/
+레드캡_pages/
+
+# 스크린샷/임시파일
+호텔비교.PNG
+관광*.PNG
+읏맨 이미지*
+읏맨-배경제거.png
+읏맨.png
+test_*.png
+extract_*.py
+apps_script.gs
+
+.vercel
+.env*.local
+
+# 임시/작업파일
+*.PNG
+*.png
+!mascot.png
+apps-script-*.js
+create-eval-report.js
+update-eval-sheets.gs
+evaluation-report.html
+평가보고서_*.md

@@ -1,0 +1,9 @@
+{
+  "name": "ok-overseas-evaluation",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "docx": "^9.6.1",
+    "google-auth-library": "^10.6.2"
+  }
+}
