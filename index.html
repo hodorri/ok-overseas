@@ -2410,7 +2410,14 @@ function HotelMap({ region }) {
           ))}
         </div>
       </div>
-      <div ref={mapRef} style={{ height: '350px' }} />
+      <div style={{ height: '350px', position: 'relative' }}>
+        <div ref={mapRef} style={{ height: '100%' }} />
+        {(!window.google || !window.google.maps) && (
+          <div className="absolute inset-0 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
+            지도를 불러올 수 없습니다 (Google Maps API 로딩 실패)
+          </div>
+        )}
+      </div>
       <div className="p-3 border-t bg-gray-50 overflow-y-auto" style={{ maxHeight: '300px' }}>
         {AGENCIES.filter(a => visibleAgencies[a]).map(agency => {
           const hotels = (HOTEL_LOCATIONS[region] || {})[agency] || [];
@@ -3013,6 +3020,12 @@ function TourSection({ itineraryData, setItineraryData }) {
         {/* Map */}
         <div className="bg-white rounded-xl shadow overflow-hidden relative" style={{ minHeight: '500px' }}>
           <div ref={mapRef} className="w-full h-full" style={{ minHeight: '500px', cursor: mapClickTarget ? 'crosshair' : '' }} />
+          {(!window.google || !window.google.maps) && (
+            <div className="absolute inset-0 bg-gray-100 flex items-center justify-center text-gray-400 text-sm flex-col gap-2">
+              <svg className="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
+              지도를 불러올 수 없습니다
+            </div>
+          )}
           {mapClickTarget && (
             <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg text-sm font-bold z-10 animate-pulse">
               지도를 클릭하여 "{newPlaceName || '포인트'}" 위치를 지정하세요
