@@ -3042,21 +3042,19 @@ function EtcSection({ onInternalScoresChange, internalEvalData, quoteData, safet
             안전사고 매뉴얼 보유 평가
           </h3>
           <div className="text-xs text-gray-500 mb-4 bg-gray-50 rounded-lg p-3">
-            제출 체크 시 평가결과 &gt; 안전사고 매뉴얼 점수에 자동 반영됩니다. (안전사고 매뉴얼 7.5점 + 병원 리스트 2.5점 = 10점 만점)
+            안전사고 매뉴얼 및 병원 리스트 제출 여부를 확인합니다.
           </div>
           <div className="overflow-x-auto mb-4">
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-gray-50">
                   <th className="p-3 text-left">항목</th>
-                  <th className="p-3 text-center">배점</th>
                   {AGENCIES.map(a => <th key={a} className="p-3 text-center" style={{ color: AGENCY_COLORS[a] }}>{a}</th>)}
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-t">
                   <td className="p-3 font-medium">안전사고 매뉴얼</td>
-                  <td className="p-3 text-center text-ok-orange font-bold">7.5점</td>
                   {AGENCIES.map(a => (
                     <td key={a} className="p-3 text-center">
                       <label className="inline-flex items-center gap-2 cursor-pointer">
@@ -3079,7 +3077,6 @@ function EtcSection({ onInternalScoresChange, internalEvalData, quoteData, safet
                 </tr>
                 <tr className="border-t">
                   <td className="p-3 font-medium">병원 리스트</td>
-                  <td className="p-3 text-center text-ok-orange font-bold">2.5점</td>
                   {AGENCIES.map(a => (
                     <td key={a} className="p-3 text-center">
                       <label className="inline-flex items-center gap-2 cursor-pointer">
@@ -3099,14 +3096,6 @@ function EtcSection({ onInternalScoresChange, internalEvalData, quoteData, safet
                       </label>
                     </td>
                   ))}
-                </tr>
-                <tr className="border-t-2 border-ok-orange bg-ok-light font-bold">
-                  <td className="p-3">합계</td>
-                  <td className="p-3 text-center text-ok-orange">10점</td>
-                  {AGENCIES.map(a => {
-                    const total = (safetySubmission[a]?.manual ? 7.5 : 0) + (safetySubmission[a]?.hospital ? 2.5 : 0);
-                    return <td key={a} className="p-3 text-center text-lg" style={{ color: AGENCY_COLORS[a] }}>{total}점</td>;
-                  })}
                 </tr>
               </tbody>
             </table>
