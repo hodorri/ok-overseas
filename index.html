@@ -100,7 +100,8 @@ th, .font-extrabold, .winner-badge { font-weight: 700; }
 <body class="bg-gray-50 text-ok-dark">
 <div id="root"></div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpN7eNpBsA3iTYpvfrzgSSv3tVvcN_JR4&callback=Function.prototype" async defer></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script type="text/babel">
 const { useState, useEffect, useRef, useCallback, createContext, useContext } = React;
@@ -2339,55 +2340,36 @@ function HotelMap({ region }) {
   const [visibleAgencies, setVisibleAgencies] = useState({ '하나투어': true, '레드캡': true, '롯데관광': true });
 
   useEffect(() => {
-    if (!window.google || !window.google.maps || !mapRef.current) return;
+    if (!window.L || !mapRef.current) return;
     const center = HOTEL_MAP_CENTERS[region];
 
-    // 지도 초기화 또는 재중심
     if (!mapInstance.current) {
-      mapInstance.current = new google.maps.Map(mapRef.current, {
-        center: { lat: center.lat, lng: center.lng },
-        zoom: center.zoom,
-        styles: [{ featureType: 'poi.business', stylers: [{ visibility: 'off' }] }],
-      });
+      mapInstance.current = L.map(mapRef.current, { zoomControl: true }).setView([center.lat, center.lng], center.zoom);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+      }).addTo(mapInstance.current);
     } else {
-      mapInstance.current.setCenter({ lat: center.lat, lng: center.lng });
-      mapInstance.current.setZoom(center.zoom);
+      mapInstance.current.setView([center.lat, center.lng], center.zoom);
     }
 
-    // 기존 마커 제거
-    markersRef.current.forEach(m => m.setMap(null));
+    markersRef.current.forEach(m => mapInstance.current.removeLayer(m));
     markersRef.current = [];
 
     const locations = HOTEL_LOCATIONS[region] || {};
-    const iconShapes = { '하나투어': '●', '레드캡': '◆', '롯데관광': '■' };
-
     AGENCIES.forEach(agency => {
       if (!visibleAgencies[agency]) return;
       const hotels = locations[agency] || [];
       const color = AGENCY_COLORS[agency];
 
       hotels.forEach((h, idx) => {
-        const marker = new google.maps.Marker({
-          position: { lat: h.lat, lng: h.lng },
-          map: mapInstance.current,
-          label: { text: String(idx + 1), color: 'white', fontWeight: 'bold', fontSize: '11px' },
-          icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            fillColor: color,
-            fillOpacity: 1,
-            strokeColor: '#fff',
-            strokeWeight: 2,
-            scale: 14,
-          },
-          title: `${agency} - ${h.name}`,
+        const icon = L.divIcon({
+          className: '',
+          html: `<div style="background:${color};color:white;width:24px;height:24px;border-radius:50%;border:2px solid white;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;box-shadow:0 1px 3px rgba(0,0,0,.3)">${idx+1}</div>`,
+          iconSize: [24, 24], iconAnchor: [12, 12],
         });
-        const infoWindow = new google.maps.InfoWindow({
-          content: `<div style="font-size:13px;font-family:'오케이체',sans-serif;">
-            <b style="color:${color}">${agency}</b> [${h.option}]<br/>
-            <b>${h.name}</b>
-          </div>`
-        });
-        marker.addListener('click', () => infoWindow.open(mapInstance.current, marker));
+        const marker = L.marker([h.lat, h.lng], { icon })
+          .bindPopup(`<div style="font-size:13px"><b style="color:${color}">${agency}</b> [${h.option}]<br/><b>${h.name}</b></div>`)
+          .addTo(mapInstance.current);
         markersRef.current.push(marker);
       });
     });
@@ -2412,9 +2394,9 @@ function HotelMap({ region }) {
       </div>
       <div style={{ height: '350px', position: 'relative' }}>
         <div ref={mapRef} style={{ height: '100%' }} />
-        {(!window.google || !window.google.maps) && (
+        {!window.L && (
           <div className="absolute inset-0 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-            지도를 불러올 수 없습니다 (Google Maps API 로딩 실패)
+            지도를 불러올 수 없습니다
           </div>
         )}
       </div>
@@ -2429,8 +2411,7 @@ function HotelMap({ region }) {
                   style={{ borderLeftColor: AGENCY_COLORS[agency] }}
                   onClick={() => {
                     if (mapInstance.current) {
-                      mapInstance.current.panTo({ lat: h.lat, lng: h.lng });
-                      mapInstance.current.setZoom(15);
+                      mapInstance.current.setView([h.lat, h.lng], 15);
                     }
                   }}>
                   <span className="font-bold">{h.name}</span>
@@ -2651,7 +2632,7 @@ function TourSection({ itineraryData, setItineraryData }) {
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
   const markersRef = useRef([]);
-  const agencyMarkersRef = useRef({}); // { agencyName: [{marker, infoWindow}, ...] }
+  const agencyMarkersRef = useRef({}); // { agencyName: [{marker}, ...] }
   const [mapClickTarget, setMapClickTarget] = useState(null); // {agency, dayIdx} - 지도 클릭 대기 상태
   const [newPlaceName, setNewPlaceName] = useState('');
 
@@ -2659,16 +2640,18 @@ function TourSection({ itineraryData, setItineraryData }) {
   const highlightMarker = React.useCallback((agency, globalCoordIdx) => {
     const markers = agencyMarkersRef.current[agency];
     if (markers && markers[globalCoordIdx]) {
-      const { marker, infoWindow } = markers[globalCoordIdx];
-      marker.setAnimation(google.maps.Animation.BOUNCE);
-      infoWindow.open(mapInstance.current, marker);
+      const { marker } = markers[globalCoordIdx];
+      marker.openPopup();
+      const el = marker.getElement && marker.getElement();
+      if (el) el.style.transform = (el.style.transform || '') + ' scale(1.4)';
     }
   }, []);
   const unhighlightMarker = React.useCallback((agency, globalCoordIdx) => {
     const markers = agencyMarkersRef.current[agency];
     if (markers && markers[globalCoordIdx]) {
-      markers[globalCoordIdx].marker.setAnimation(null);
-      markers[globalCoordIdx].infoWindow.close();
+      markers[globalCoordIdx].marker.closePopup();
+      const el = markers[globalCoordIdx].marker.getElement && markers[globalCoordIdx].marker.getElement();
+      if (el) el.style.transform = el.style.transform.replace(' scale(1.4)', '');
     }
   }, []);
 
@@ -2739,25 +2722,25 @@ function TourSection({ itineraryData, setItineraryData }) {
   }, [mapClickTarget, newPlaceName, tab]);
 
   useEffect(() => {
-    if (!window.google || !window.google.maps) return;
+    if (!window.L) return;
     const center = MAP_CENTERS[tab];
     if (!mapInstance.current) {
-      mapInstance.current = new google.maps.Map(mapRef.current, {
-        center: { lat: center.lat, lng: center.lng },
-        zoom: center.zoom,
-        styles: [{ featureType:'poi', stylers:[{visibility:'off'}] }],
-      });
+      mapInstance.current = L.map(mapRef.current, { zoomControl: true }).setView([center.lat, center.lng], center.zoom);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+      }).addTo(mapInstance.current);
     } else {
-      mapInstance.current.setCenter({ lat: center.lat, lng: center.lng });
-      mapInstance.current.setZoom(center.zoom);
+      mapInstance.current.setView([center.lat, center.lng], center.zoom);
     }
 
     // 지도 클릭 이벤트 (편집 모드에서 좌표 추가)
-    google.maps.event.clearListeners(mapInstance.current, 'click');
-    mapInstance.current.addListener('click', handleMapClick);
+    mapInstance.current.off('click');
+    mapInstance.current.on('click', (e) => {
+      if (handleMapClick) handleMapClick({ latLng: { lat: () => e.latlng.lat, lng: () => e.latlng.lng } });
+    });
 
-    // Clear old markers
-    markersRef.current.forEach(m => m.setMap(null));
+    // Clear old markers/polylines
+    markersRef.current.forEach(m => mapInstance.current.removeLayer(m));
     markersRef.current = [];
     agencyMarkersRef.current = {};
 
@@ -2773,42 +2756,25 @@ function TourSection({ itineraryData, setItineraryData }) {
 
       itin.days.forEach(day => {
         day.coords.forEach(c => {
-          pathCoords.push({ lat: c.lat, lng: c.lng });
+          pathCoords.push([c.lat, c.lng]);
           const displayName = c.name && !c.name.startsWith('포인트') ? c.name : `${day.day} #${markerIndex}`;
-          const marker = new google.maps.Marker({
-            position: { lat: c.lat, lng: c.lng },
-            map: mapInstance.current,
-            label: { text: String(markerIndex), color: 'white', fontWeight: 'bold', fontSize: '11px' },
-            icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              fillColor: color,
-              fillOpacity: 1,
-              strokeColor: '#fff',
-              strokeWeight: 2,
-              scale: 14,
-            },
-            title: `${agency} - ${displayName}`,
+          const icon = L.divIcon({
+            className: '',
+            html: `<div style="background:${color};color:white;width:24px;height:24px;border-radius:50%;border:2px solid white;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s">${markerIndex}</div>`,
+            iconSize: [24, 24], iconAnchor: [12, 12],
           });
-          const infoWindow = new google.maps.InfoWindow({
-            content: `<div style="font-size:13px;padding:4px;"><b style="color:${color}">${agency}</b><br/><span style="font-size:11px;color:#666;">${day.day}</span><br/><b>${displayName}</b></div>`
-          });
-          marker.addListener('click', () => infoWindow.open(mapInstance.current, marker));
+          const marker = L.marker([c.lat, c.lng], { icon })
+            .bindPopup(`<div style="font-size:13px;padding:4px;"><b style="color:${color}">${agency}</b><br/><span style="font-size:11px;color:#666;">${day.day}</span><br/><b>${displayName}</b></div>`)
+            .addTo(mapInstance.current);
           markersRef.current.push(marker);
-          agencyMarkersRef.current[agency].push({ marker, infoWindow });
+          agencyMarkersRef.current[agency].push({ marker });
           markerIndex++;
         });
       });
 
       // Draw polyline
       if (pathCoords.length > 1) {
-        const polyline = new google.maps.Polyline({
-          path: pathCoords,
-          geodesic: true,
-          strokeColor: color,
-          strokeOpacity: 0.7,
-          strokeWeight: 3,
-          map: mapInstance.current,
-        });
+        const polyline = L.polyline(pathCoords, { color, opacity: 0.7, weight: 3 }).addTo(mapInstance.current);
         markersRef.current.push(polyline);
       }
     });
@@ -3020,9 +2986,8 @@ function TourSection({ itineraryData, setItineraryData }) {
         {/* Map */}
         <div className="bg-white rounded-xl shadow overflow-hidden relative" style={{ minHeight: '500px' }}>
           <div ref={mapRef} className="w-full h-full" style={{ minHeight: '500px', cursor: mapClickTarget ? 'crosshair' : '' }} />
-          {(!window.google || !window.google.maps) && (
-            <div className="absolute inset-0 bg-gray-100 flex items-center justify-center text-gray-400 text-sm flex-col gap-2">
-              <svg className="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
+          {!window.L && (
+            <div className="absolute inset-0 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
               지도를 불러올 수 없습니다
             </div>
           )}
