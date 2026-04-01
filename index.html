@@ -1890,20 +1890,7 @@ function EvaluationSection({ internalScores, safetySubmission, scoreDefData }) {
     }
   }, [internalScores]);
 
-  // 안전사고 매뉴얼 점수 자동 반영 (매뉴얼 7.5 + 병원리스트 2.5 = 10점 만점 → 5점 스케일)
-  useEffect(() => {
-    if (!safetySubmission) return;
-    setScores(prev => {
-      const copy = { ...prev };
-      AGENCIES.forEach(a => {
-        const sub = safetySubmission[a] || {};
-        const rawScore = (sub.manual ? 7.5 : 0) + (sub.hospital ? 2.5 : 0);
-        const scaled = Math.round(rawScore / 10 * 5);
-        copy[`${a}_safety`] = Math.max(0, Math.min(5, scaled));
-      });
-      return copy;
-    });
-  }, [safetySubmission]);
+  // 안전사고 매뉴얼 점수: 시트(평가결과)에서 로딩된 점수 사용 (자동 산출 제거)
 
   const computeTotal = (agency) => {
     let sum = 0;
@@ -2073,8 +2060,6 @@ function EvaluationSection({ internalScores, safetySubmission, scoreDefData }) {
                     </td>
                     {AGENCIES.map(a => {
                       const isInternalAuto = c.id === 'internal' && internalScores && Object.values(internalScores).some(v => v > 0);
-                      const isSafetyAuto = c.id === 'safety' && safetySubmission;
-                      const safetyRaw = isSafetyAuto ? ((safetySubmission[a]?.manual ? 7.5 : 0) + (safetySubmission[a]?.hospital ? 2.5 : 0)) : 0;
                       return (
                       <td key={a} className="p-3 text-center">
                         {isInternalAuto ? (
@@ -2089,19 +2074,6 @@ function EvaluationSection({ internalScores, safetySubmission, scoreDefData }) {
                               ))}
                             </div>
                             <div className="text-xs text-ok-orange mt-1">자동 (평균 {(internalScores[a] || 0).toFixed(2)})</div>
-                          </div>
-                        ) : isSafetyAuto ? (
-                          <div className="text-center">
-                            <div className="flex justify-center gap-1">
-                              {[0,1,2,3,4,5].map(v => (
-                                <span key={v}
-                                  className={`w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center ${scores[`${a}_${c.id}`]===v ? 'text-white shadow' : 'bg-gray-100 text-gray-300'}`}
-                                  style={scores[`${a}_${c.id}`]===v ? {backgroundColor:AGENCY_COLORS[a]} : {}}>
-                                  {v}
-                                </span>
-                              ))}
-                            </div>
-                            <div className="text-xs text-ok-orange mt-1">자동 ({safetyRaw}/10점)</div>
                           </div>
                         ) : (
                           <div className="flex justify-center gap-1">
